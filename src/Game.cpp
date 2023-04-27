@@ -85,7 +85,7 @@ int Game::Run() {
 #endif // _DEBUG
         SceneManager::Render();
 #ifdef _DEBUG
-        std::cout << "FPS: " << 60.0f / deltaTime << "\t" << "Draw Calls:" << renderer.drawCalls << '\n';
+        std::cout << "FPS: " << 1.0f / deltaTime << "\t" << "Draw Calls:" << renderer.drawCalls << '\n';
 #endif // _DEBUG
 
         // Swap front and back buffers 
