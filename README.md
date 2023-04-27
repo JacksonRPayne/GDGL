@@ -1,6 +1,6 @@
 # Saidar
 
-A 2D "game engine". 
+A 2D "game engine" built with C++ using OpenGL for rendering.
 
 # Features:
 ## Batch Rendering
