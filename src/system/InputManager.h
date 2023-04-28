@@ -31,7 +31,7 @@ public:
 	static bool GetMouseButtonUp(int button);
 
 	// Convert pixel coordinates to world coordinates
-	static glm::vec2 GetWorldMousePos(int windowWidth, int windowHeight, float camWidth, const Transform& camTransform);
+	static glm::vec2 GetWorldMousePos(int windowWidth, int windowHeight, float camRight, const Transform& camTransform);
 	// Call at the end of a frame
 	static void Update();
 
