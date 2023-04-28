@@ -17,6 +17,7 @@
 #include "scene/Scene.h"
 #include "graphics/BatchRenderer.h"
 #include "scene/Entities/Zach.h"
+#include "scene/scenes/Scenes.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480

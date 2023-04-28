@@ -9,6 +9,7 @@
 class Zach : public Entity
 {
 public:
+	Zach():textureAtlas(nullptr){}
 	Zach(float xPos, float yPos, float xScale, float yScale, float rotation, int layer = 0);
 	Zach(float xPos, float yPos, float xScale, float yScale, float rotation, Texture* spriteAtlas, int layer = 0);
 

@@ -15,7 +15,7 @@ class Animator {
 public:
 	//TODO: Review this and animation class, document more and clean up
 	Animator();
-	
+	Animator& operator=(const Animator& a);
 	void AddAnimation(const std::string name, Animation animation);
 	void Update(float dt);
 	void PlayAnimation(const std::string& animation, bool looping, bool interruptible);

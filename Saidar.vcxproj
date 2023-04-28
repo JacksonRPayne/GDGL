@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\scene\scenes\MainScene.cpp" />
     <ClCompile Include="src\graphics\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\Renderer.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -159,9 +160,11 @@
     <ClCompile Include="src\scene\Entities\Zach.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\scene\scenes\MainScene.h" />
     <ClInclude Include="src\graphics\BatchRenderer.h" />
     <ClInclude Include="src\graphics\Renderer.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\scene\scenes\Scenes.h" />
     <ClInclude Include="src\system\Log.h" />
     <ClInclude Include="src\graphics\SpriteRenderer.h" />
     <ClInclude Include="src\system\ResourceManager.h" />

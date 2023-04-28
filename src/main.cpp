@@ -11,11 +11,13 @@
 // ---- hard coded in on the stack and manually call each ones Update in scene update >0o0<
 // 
 // Scene
-// -- Deallocate entities
-// -- (later) maybe add scene loader/unloader function pointers
+// -- Convert to struct of function pointers (or anything light weight and functional)
 // 
 // All
 // -- evaluate map data structures (make sure they're blazingly fast)
+// 
+// Animation/Animator
+// -- Complete refactor, organize and document
 // 
 // Collision detection
 // -- Hitbox class
@@ -28,6 +30,10 @@
 // -- Library or from scratch?
 // 
 
+
+// NOTE:
+// -- I could make this project like: backbone = OOP, game on top = functional
+// -- Backbone is more like an API, but game on top feels like everything should be public/global/functional
 
 int main(void)
 {

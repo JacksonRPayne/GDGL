@@ -18,25 +18,18 @@ int Game::Run() {
 
     window->Init();
 
-    ResourceManager::LoadShader("res/shaders/batch_default.vert", "res/shaders/batch_default.frag", "default");
-    ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
-
-    Camera camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT);
-    BatchRenderer renderer(&camera, ResourceManager::GetShader("default"));
-
-    Scene main("main", &camera, &renderer);
-    Zach zach(0.0f, 0.0f, 1.0f, 1.0f, 0, 1);
-    zach.SetTexture(ResourceManager::GetTexture("zach"));
-    main.AddEntity(&zach);
-
-    SceneManager::AddScene(&main);
-
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
     float currFrame = 0.0f;
 
     float camSpeed = 4.0f;
+    Camera camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT);
+    ResourceManager::LoadShader("res/shaders/batch_default.vert", "res/shaders/batch_default.frag", "default");
+    BatchRenderer renderer(&camera, ResourceManager::GetShader("default"));
 
+    MainScene main("main", &camera, &renderer);
+    SceneManager::AddScene(&main);
+    SceneManager::SetCurrentScene("main");
     // Game loop
     while (window->IsOpen())
     {
@@ -51,39 +44,10 @@ int Game::Run() {
         lastFrame = currFrame;
 
 
-        if (InputManager::GetKey(GLFW_KEY_D)) {
-            camera.transform.Translate(camSpeed * deltaTime, 0.0f);
-        }
-        else if (InputManager::GetKey(GLFW_KEY_A)) {
-            camera.transform.Translate(-camSpeed * deltaTime, 0.0f);
-        }
-        if (InputManager::GetKey(GLFW_KEY_W)) {
-            camera.transform.Translate(0.0f, -camSpeed * deltaTime);
-        }
-        else if (InputManager::GetKey(GLFW_KEY_S)) {
-            camera.transform.Translate(0.0f, camSpeed * deltaTime);
-        }
-
-        if (InputManager::GetKey(GLFW_KEY_LEFT_SHIFT)) {
-            camera.transform.Scale(camSpeed * deltaTime, camSpeed * deltaTime);
-        }
-        else if (InputManager::GetKey(GLFW_KEY_SPACE)) {
-            camera.transform.Scale(-camSpeed * deltaTime, -camSpeed * deltaTime);
-        }
-
-        if (InputManager::GetMouseButton(GLFW_MOUSE_BUTTON_1)) {
-            // TODO: stack allocate
-            glm::vec2 mousePos = InputManager::GetWorldMousePos(window->GetWidth(), window->GetHeight(), camera.right, camera.transform);
-            Zach* z = new Zach(mousePos.x, mousePos.y, 1.0f, 1.0f, 0.0f);
-            z->SetTexture(ResourceManager::GetTexture("zach"));
-            main.AddEntity(z);
-        }
-
         SceneManager::Update(deltaTime);
 #ifdef _DEBUG
         renderer.drawCalls = 0;
 #endif // _DEBUG
-        SceneManager::Render();
 #ifdef _DEBUG
         std::cout << "FPS: " << 1.0f / deltaTime << "\t" << "Draw Calls:" << renderer.drawCalls << '\n';
 #endif // _DEBUG

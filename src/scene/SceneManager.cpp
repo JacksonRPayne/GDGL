@@ -8,9 +8,6 @@ void SceneManager::Update(float dt) {
 	currentScene->Update(dt);
 }
 
-void SceneManager::Render() {
-	currentScene->Render();
-}
 
 void SceneManager::AddScene(Scene* scene) {
 	scenes[scene->GetName()] = scene;
@@ -29,6 +26,8 @@ void SceneManager::SetCurrentScene(const std::string& sceneName) {
 	}
 	// Pass on projection to next camera (in case of window resize between scenes)
 	float aspectRatio = currentScene->GetMainCamera()->right / WORLD_SCALE;
+	if(currentScene) currentScene->End(); // Ends last scene
 	currentScene = scenes[sceneName]; // Actual scene change
 	currentScene->GetMainCamera()->AdjustProjection(aspectRatio);
+	currentScene->Start();
 }
