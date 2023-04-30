@@ -4,6 +4,9 @@ struct MainEntities {
 	MainEntities() = default;
 	Zach zach;
 	//std::vector<Zach> spawnedZachs;
+	// ^note: to allow for multiple of an entity to be renderered and updated in a scene without annoying code rewriting
+	// but also avoiding OOP, for each entity define 2 *functions* (not methods) that takes in a vector of that entity type
+	// and updates/renders it. Ex: void UpdateZachs(const std::vector<Zach> &zachs, float dt), and render would be similar
 };
 
 static MainEntities entities = MainEntities();
@@ -11,6 +14,7 @@ static MainEntities entities = MainEntities();
 MainScene::MainScene(const std::string& name, Camera* mainCamera, Renderer* renderer) 
 	: Scene(name, mainCamera, renderer){}
 
+// TODO: to avoid OOP, you could add camera and renderer to mainscene data, and pass arguments into Start(Camera* camera, Renderer* renderer) like a constructor
 void MainScene::Start() {
 	ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
 	entities.zach = Zach(0.0f, 0.0f, 1.0f, 1.0f, 0.0f, ResourceManager::GetTexture("zach"));
