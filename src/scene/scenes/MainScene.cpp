@@ -52,4 +52,5 @@ void MainScene::Update(float dt) {
 // etc;
 // }
 // But question: what is nullptr equivalent of stack allocated object that I can set these to?? Do i HAVE to call default constructors?
+// Aha (maybe): call destructor *explicitly* ? SceneUnload(){ entities.~MainEntities(); }
 
