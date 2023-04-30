@@ -42,3 +42,14 @@ void MainScene::Update(float dt) {
 	}*/
 	renderer->End();
 }
+
+// TODO: NOTE: Unload scene:
+// -- How do we get rid of the memory allocated from static MainEntities entities ?
+// -- One idea:
+// SceneUnload(){
+// entities.field1 = nothing;
+// entities.field2 = nothing;
+// etc;
+// }
+// But question: what is nullptr equivalent of stack allocated object that I can set these to?? Do i HAVE to call default constructors?
+
