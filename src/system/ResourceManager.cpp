@@ -1,8 +1,8 @@
 #include "ResourceManager.h"
 
 // Declares maps
-std::map<std::string, Texture*> ResourceManager::textureMap;
-std::map<std::string, Shader*> ResourceManager::shaderMap;
+std::unordered_map<std::string, Texture*> ResourceManager::textureMap;
+std::unordered_map<std::string, Shader*> ResourceManager::shaderMap;
 
 
 void ResourceManager::LoadTexture(const char* path, const std::string& name, bool alpha) {

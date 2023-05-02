@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <unordered_map>
 #include <string>
 #include <sstream>
 #include "Camera.h"
@@ -22,7 +23,7 @@ public:
 	// -- SceneManager::scenes["main"].addEntity(yadayada)
 	// -- doing it this way prevents copying gigantic scene objects (esp if entities become stack allocated later)
 	// -- make sure map accesses are optimized
-	static std::map<std::string, Scene*> scenes;
+	static std::unordered_map<std::string, Scene*> scenes;
 private:
 
 	static Scene* currentScene;

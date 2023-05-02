@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <unordered_map>
 #include <string>
 #include "graphics/Shader.h"
 #include "graphics/Texture.h"
@@ -26,8 +27,8 @@ public:
 private:
 	// Takes in a name and returns a shader/texture
 	// TODO: make these store pointers instead for less copying
-	static std::map<std::string, Texture*> textureMap;
-	static std::map<std::string, Shader*> shaderMap;
+	static std::unordered_map<std::string, Texture*> textureMap;
+	static std::unordered_map<std::string, Shader*> shaderMap;
 
 };
 

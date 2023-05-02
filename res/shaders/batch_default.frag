@@ -9,7 +9,6 @@ flat in float v_texSlot;
 uniform sampler2D[16] textures;
 
 void main(){
-	// TODO: theres one wasted slot bc 0 doesn't bind a texture 
 	switch(int(v_texSlot)){
 		case -1: color = v_color; break;
 		case 0: color = texture(textures[0], v_texCoord) * v_color; break;

@@ -1,6 +1,7 @@
 #pragma once
 #include "Animation.h"
 #include <map>
+#include <unordered_map>
 #include <string>
 #include <queue>
 #include <iostream>
@@ -31,7 +32,7 @@ public:
 
 private:
 	// Map of animations to their name
-	std::map<std::string, Animation> animMap;
+	std::unordered_map<std::string, Animation> animMap;
 	// Stores animations on deck to be played
 	// If one animation is not interruptable, the next
 	// will play when it's finished.

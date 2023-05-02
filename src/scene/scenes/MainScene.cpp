@@ -4,9 +4,20 @@ struct MainEntities {
 	MainEntities() = default;
 	Zach zach;
 	std::vector<Zach> spawnedZachs;
-	// ^note: to allow for multiple of an entity to be renderered and updated in a scene without annoying code rewriting
-	// but also avoiding OOP, for each entity define 2 *functions* (not methods) that takes in a vector of that entity type
-	// and updates/renders it. Ex: void UpdateZachs(const std::vector<Zach> &zachs, float dt), and render would be similar
+
+	void Update(float dt) {
+		zach.Update(dt);
+		Zach::UpdateMultiple(dt, &spawnedZachs);
+	}
+
+	void Render(Renderer* renderer) {
+		renderer->Start();
+
+		zach.Render(renderer);
+		Zach::RenderMultiple(renderer, &spawnedZachs);
+
+		renderer->End();
+	}
 };
 
 static MainEntities entities = MainEntities();
@@ -32,16 +43,11 @@ void MainScene::Update(float dt) {
 	}
 
 	// UPDATE:
-	entities.zach.Update(dt);
-	Zach::UpdateMultiple(dt, &entities.spawnedZachs);
+	entities.Update(dt);
 
 	// RENDER
-	renderer->Start();
+	entities.Render(renderer);
 
-	entities.zach.Render(renderer);
-	Zach::RenderMultiple(renderer, &entities.spawnedZachs);
-
-	renderer->End();
 }
 
 // TODO: NOTE: Unload scene:

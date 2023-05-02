@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 
 
-std::map<std::string, Scene*> SceneManager::scenes;
+std::unordered_map<std::string, Scene*> SceneManager::scenes;
 Scene* SceneManager::currentScene = nullptr;
 
 void SceneManager::Update(float dt) {

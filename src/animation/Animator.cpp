@@ -7,7 +7,7 @@ Animator::Animator() : animMap(), animQueue(), currentAnimation(), playingAnimat
 Animator& Animator::operator=(const Animator& other) 
 {
 	// Deep copies maps
-	this->animMap = std::map<std::string, Animation>(other.animMap);
+	this->animMap = std::unordered_map<std::string, Animation>(other.animMap);
 	this->animQueue = std::queue<std::string>(other.animQueue);
 	this->currentAnimation = nullptr;
 	this->playingAnimation = false;
@@ -21,7 +21,7 @@ Animator& Animator::operator=(const Animator& other)
 
 Animator::Animator(const Animator& other) {
 	// Deep copies maps
-	this->animMap = std::map<std::string, Animation>(other.animMap);
+	this->animMap = std::unordered_map<std::string, Animation>(other.animMap);
 	this->animQueue = std::queue<std::string>(other.animQueue);
 	this->currentAnimation = nullptr;
 	this->playingAnimation = false;
@@ -49,13 +49,13 @@ void Animator::AnimEndCallback() {
 void Animator::AddAnimation(const std::string name, Animation animation) {
 	animation.SetAnimator(this);
 	animation.SetAnimEndCallback(&Animator::AnimEndCallback);
+	animation.name = name;
 	animMap[name] = animation;
 }
 
 void Animator::PlayOnce(const std::string& animation, bool looping, bool interruptible) {
-	// TODO: Spinning on a map access? I don't think so...
-	// -- also passing string = 2 map accesses --> pass pointer instead?
-	if (currentAnimation != &animMap[animation]) PlayAnimation(animation, looping, interruptible);
+	// Only plays if not currently playing
+	if (!currentAnimation || currentAnimation->name != animation) PlayAnimation(animation, looping, interruptible);
 }
 
 void Animator::PlayAnimation(const std::string& animation, bool looping=false, bool interruptible=true) {

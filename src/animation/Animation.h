@@ -15,7 +15,6 @@ struct Frame {
 class Animation
 {
 public:
-	// TODO: add name member? less map accesses
 	Animation();
 	Animation(const std::vector<Frame> &frames, float playSpeed);
 
@@ -39,6 +38,8 @@ public:
 	void Update(float dt);
 	void Play();
 	void Stop();
+
+	std::string name;
 
 private:
 	// The speed at which each frame goes by

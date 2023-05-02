@@ -1,6 +1,5 @@
 #include "Animation.h"
 
-// TODO: init animator to nullptr? (gonna do later to make sure it doesn't break)
 Animation::Animation() : frames(), playSpeed(MIN_PLAY_SPEED), playTime(0.0f),
 currentFrame(0), playing(false), looping(false), interruptible(false), animEndCallback(nullptr), animator(nullptr) {}
 
