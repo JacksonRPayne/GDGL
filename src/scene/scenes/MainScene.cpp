@@ -3,7 +3,7 @@
 struct MainEntities {
 	MainEntities() = default;
 	Zach zach;
-	//std::vector<Zach> spawnedZachs;
+	std::vector<Zach> spawnedZachs;
 	// ^note: to allow for multiple of an entity to be renderered and updated in a scene without annoying code rewriting
 	// but also avoiding OOP, for each entity define 2 *functions* (not methods) that takes in a vector of that entity type
 	// and updates/renders it. Ex: void UpdateZachs(const std::vector<Zach> &zachs, float dt), and render would be similar
@@ -21,25 +21,26 @@ void MainScene::Start() {
 	// TODO: I think the issue is still with the operator overload
 	// -- I THINK THE ISSUE IS I NEED TO DEFINE VALID COPY CONSTRUCTOR
 	// stack allocating is almost more complicated than heap allocating :'(
-	//entities.spawnedZachs = std::vector<Zach>();
+	entities.spawnedZachs = std::vector<Zach>();
 }
 
 void MainScene::Update(float dt) {
-	/*if (InputManager::GetMouseButton(GLFW_MOUSE_BUTTON_1)) {
+	if (InputManager::GetMouseButton(GLFW_MOUSE_BUTTON_1)) {
 		glm::vec2 mousePos = InputManager::GetWorldMousePos(Window::width, Window::height, mainCamera->right, mainCamera->transform);
-		Zach zach = Zach(mousePos.x, mousePos.y, 1.0f, 1.0f, 0.0f, ResourceManager::GetTexture("Zach.png"));
+		Zach zach = Zach(mousePos.x, mousePos.y, 1.0f, 1.0f, 0.0f, ResourceManager::GetTexture("zach"));
 		entities.spawnedZachs.push_back(zach);
-	}*/
-	// START RENDER
-	renderer->Start();
-	// ZACH
+	}
+
+	// UPDATE:
 	entities.zach.Update(dt);
+	Zach::UpdateMultiple(dt, &entities.spawnedZachs);
+
+	// RENDER
+	renderer->Start();
+
 	entities.zach.Render(renderer);
-	// SPAWNED
-	/*for (Zach z : entities.spawnedZachs) {
-		z.Update(dt);
-		z.Render(renderer);
-	}*/
+	Zach::RenderMultiple(renderer, &entities.spawnedZachs);
+
 	renderer->End();
 }
 

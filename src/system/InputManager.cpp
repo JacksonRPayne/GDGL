@@ -35,6 +35,7 @@ bool InputManager::GetMouseButtonUp(int button){
 
 glm::vec2 InputManager::GetWorldMousePos(int windowWidth, int windowHeight, float camRight, const Transform &camTransform) {
 	// TODO: is this a matrix operation? probably
+	// TODO: also change input to be camera pointer?
 	float xNorm = ((mouseX / windowWidth)*2 - 1.0f)*camTransform.GetScale().x;
 	float yNorm = ((mouseY / windowHeight)*2 - 1.0f )* camTransform.GetScale().y;;
 	return  glm::vec2(xNorm * camRight + camTransform.GetPosition().x, yNorm + camTransform.GetPosition().y);

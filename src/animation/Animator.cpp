@@ -4,11 +4,11 @@ Animator::Animator() : animMap(), animQueue(), currentAnimation(), playingAnimat
 
 }
 
-Animator& Animator::operator=(const Animator& a) 
+Animator& Animator::operator=(const Animator& other) 
 {
 	// Deep copies maps
-	this->animMap = std::map<std::string, Animation>(a.animMap);
-	this->animQueue = std::queue<std::string>(a.animQueue);
+	this->animMap = std::map<std::string, Animation>(other.animMap);
+	this->animQueue = std::queue<std::string>(other.animQueue);
 	this->currentAnimation = nullptr;
 	this->playingAnimation = false;
 	this->interruptible = true;
@@ -17,6 +17,19 @@ Animator& Animator::operator=(const Animator& a)
 		anim.second.SetAnimator(this);
 	}
 	return *this;
+}
+
+Animator::Animator(const Animator& other) {
+	// Deep copies maps
+	this->animMap = std::map<std::string, Animation>(other.animMap);
+	this->animQueue = std::queue<std::string>(other.animQueue);
+	this->currentAnimation = nullptr;
+	this->playingAnimation = false;
+	this->interruptible = true;
+	// Adjusts pointers
+	for (auto& anim : animMap) {
+		anim.second.SetAnimator(this);
+	}
 }
 
 void Animator::AnimEndCallback() {

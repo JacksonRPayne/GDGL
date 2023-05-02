@@ -18,6 +18,10 @@ public:
 
 	void SetTexture(Texture* texture);
 
+	static void UpdateMultiple(float dt, std::vector<Zach>* zachs);
+	static void RenderMultiple(Renderer* renderer, std::vector<Zach>* zachs);
+
+
 private:
 	void InitializeAnimations();
 	Animator animator;

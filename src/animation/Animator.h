@@ -16,6 +16,7 @@ public:
 	//TODO: Review this and animation class, document more and clean up
 	Animator();
 	Animator& operator=(const Animator& a);
+	Animator(const Animator& other);
 	~Animator() {};
 	void AddAnimation(const std::string name, Animation animation);
 	void Update(float dt);

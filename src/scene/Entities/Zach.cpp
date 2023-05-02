@@ -52,6 +52,12 @@ void Zach::Render(Renderer* renderer) {
 	renderer->DrawQuad(textureAtlas, subTexture, transform.GetModelMatrix());
 }
 
+void Zach::RenderMultiple(Renderer* renderer, std::vector<Zach>* zachs) {
+	for (int i = 0; i < zachs->size(); i++) {
+		(*zachs)[i].Render(renderer);
+	}
+}
+
 void Zach::Update(float dt) {
 	if (InputManager::GetKey(GLFW_KEY_RIGHT)) {
 		animator.PlayOnce("Walk", true, true);
@@ -69,4 +75,10 @@ void Zach::Update(float dt) {
 
 	animator.Update(dt);
 	subTexture = animator.GetCurrentFrame().subTexture;
+}
+
+void Zach::UpdateMultiple(float dt, std::vector<Zach>* zachs) {
+	for (int i = 0; i < zachs->size(); i++) {
+		(*zachs)[i].Update(dt);
+	}
 }
