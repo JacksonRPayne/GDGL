@@ -1,20 +1,12 @@
 #include "Game.h"
 
-// TODO:
-// =================FIX FRAMERATE CALCULATION=================
-// 
-// Entitity system
-// -- NO ECS
-// -- One last idea thats not heap allocating each entity:
-// ---- Move polymorphism to scene: scene has virtual Start and Update
-// ---- and each scene is constructed in a seperate struct. Each entity is
-// ---- hard coded in on the stack and manually call each ones Update in scene update >0o0<
+// TODO: 
+// Move semantics:
+// -- Figure out best way to deal with stack objects, and initializing
+// -- values in the entity structs for each scene
 // 
 // Scene
-// -- Convert to struct of function pointers (or anything light weight and functional)
-// 
-// All
-// -- evaluate map data structures (make sure they're blazingly fast)
+// -- Convert to struct of function pointers? (or anything light weight and non OOP)
 // 
 // Animation/Animator
 // -- Complete refactor, organize and document

@@ -12,10 +12,11 @@ Zach::Zach(float xPos, float yPos, float xScale, float yScale, float rotation, T
 }
 
 void Zach::InitializeAnimations() {
+	// TODO: if you really want to spawn a lot of zachs, put this somewhere to only be called once and reference it
 	Animation idle = Animation();
 	idle.SetPlaySpeed(ANIM_SPEED);
 	idle.AddFrame(Frame(SubTexture(textureAtlas, 0, 0, 128, 128)));
-	idle.AddFrame(Frame(SubTexture(textureAtlas, 1* 128, 0, 128, 128)));
+	idle.AddFrame(Frame(SubTexture(textureAtlas, 1 * 128, 0, 128, 128)));
 	idle.AddFrame(Frame(SubTexture(textureAtlas, 2 * 128, 0, 128, 128)));
 	idle.AddFrame(Frame(SubTexture(textureAtlas, 3 * 128, 0, 128, 128)));
 	idle.AddFrame(Frame(SubTexture(textureAtlas, 4 * 128, 0, 128, 128)));

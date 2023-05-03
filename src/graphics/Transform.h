@@ -27,7 +27,7 @@ public:
 	const glm::vec2& GetPosition() const { return position; }
 	const glm::vec2& GetScale() const { return scale; }
 	float GetRotation() const { return rotation; }
-	glm::mat4 GetViewMatrix() const { return glm::inverse(modelMatrix); }
+	glm::mat4 GetViewMatrix() { UpdateModelMatrix(); return glm::inverse(modelMatrix); }
 
 	// Setters
 	void SetPosition(glm::vec2 newPos) { position = newPos; }

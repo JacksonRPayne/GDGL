@@ -28,10 +28,9 @@ MainScene::MainScene(const std::string& name, Camera* mainCamera, Renderer* rend
 // TODO: to avoid OOP, you could add camera and renderer to mainscene data, and pass arguments into Start(Camera* camera, Renderer* renderer) like a constructor
 void MainScene::Start() {
 	ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
+	// TODO: you're gonna want to look into move semantics...
+	// -- especially in the animation and animator classes, or really anything with a member thats a collection
 	entities.zach = Zach(0.0f, 0.0f, 1.0f, 1.0f, 0.0f, ResourceManager::GetTexture("zach"));
-	// TODO: I think the issue is still with the operator overload
-	// -- I THINK THE ISSUE IS I NEED TO DEFINE VALID COPY CONSTRUCTOR
-	// stack allocating is almost more complicated than heap allocating :'(
 	entities.spawnedZachs = std::vector<Zach>();
 }
 

@@ -16,6 +16,12 @@ Animator& Animator::operator=(const Animator& other)
 	for (auto& anim : animMap) {
 		anim.second.SetAnimator(this);
 	}
+
+	// Preserves current animation
+	if (other.currentAnimation) {
+		this->currentAnimation = &animMap[other.currentAnimation->name];
+	}
+
 	return *this;
 }
 
@@ -30,6 +36,12 @@ Animator::Animator(const Animator& other) {
 	for (auto& anim : animMap) {
 		anim.second.SetAnimator(this);
 	}
+
+	// Preserves current animation
+	if (other.currentAnimation) {
+		this->currentAnimation = &animMap[other.currentAnimation->name];
+	}
+
 }
 
 void Animator::AnimEndCallback() {

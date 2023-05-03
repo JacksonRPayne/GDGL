@@ -8,7 +8,7 @@
 class Animator;
 
 struct Frame {
-	Frame(SubTexture subTex) : subTexture(subTex){}
+	Frame(const SubTexture &subTex) : subTexture(subTex){}
 	SubTexture subTexture;
 };
 
@@ -17,6 +17,9 @@ class Animation
 public:
 	Animation();
 	Animation(const std::vector<Frame> &frames, float playSpeed);
+	Animation(const Animation& other);
+	Animation& operator=(const Animation &other);
+	~Animation(){}
 
 	// Getters
 	float GetPlaySpeed() { return playSpeed; }
@@ -53,10 +56,9 @@ private:
 	bool interruptible;
 	// The calling animator
 	Animator* animator;
+	// Function pointer to function that should be called when animation ends (set automatically by animator)
+	void (Animator::* animEndCallback)();
 	// Called at the end of the animation, either loops it again or ends it
 	void AnimationEnd();
-	// Function pointer to function that should be called when animation ends (set automatically by animator)
-	void (Animator::*animEndCallback)();
-
 };
 

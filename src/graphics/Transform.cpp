@@ -14,9 +14,6 @@ Transform::Transform(float xPos, float yPos, float xScale, float yScale, float r
 	UpdateModelMatrix();
 }
 
-// TODO: do we even need this func with batch rendering?
-// --^ could speed up rendering but rotating would b unideal
-// -- ^ *or I could only call UpdateModelMatrix when GetModelMatrix is called*
 void Transform::UpdateModelMatrix() {
 	// Initializes to identity mat
 	modelMatrix = glm::mat4(1.0f);

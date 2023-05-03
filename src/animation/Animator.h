@@ -16,7 +16,7 @@ class Animator {
 public:
 	//TODO: Review this and animation class, document more and clean up
 	Animator();
-	Animator& operator=(const Animator& a);
+	Animator& operator=(const Animator& other);
 	Animator(const Animator& other);
 	~Animator() {};
 	void AddAnimation(const std::string name, Animation animation);

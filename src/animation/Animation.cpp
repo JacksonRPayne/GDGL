@@ -8,6 +8,29 @@ Animation::Animation(const std::vector<Frame>& frames, float playSpeed) : playSp
 	SetFrames(frames);
 }
 
+Animation::Animation(const Animation& other) 
+	: name(other.name), playSpeed(other.playSpeed), frames(std::vector<Frame>(other.frames)), 
+currentFrame(other.currentFrame), playTime(other.playTime), playing(other.playing),
+looping(other.looping), interruptible(other.interruptible), animator(other.animator),
+animEndCallback(other.animEndCallback){
+}
+
+Animation& Animation::operator=(const Animation& other) {
+	name = other.name;
+	playSpeed = other.playSpeed;
+	// Deep copy frames
+	frames = std::vector<Frame>(other.frames);
+	currentFrame = other.currentFrame;
+	playTime = other.playTime;
+	playing = other.playing;
+	looping = other.looping;
+	interruptible = other.interruptible;
+	animator = other.animator;
+	animEndCallback = other.animEndCallback;
+	return *this;
+}
+
+
 void Animation::Play() {
 	currentFrame = 0;
 	playTime = 0.0f;
