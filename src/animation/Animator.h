@@ -19,7 +19,7 @@ public:
 	Animator& operator=(const Animator& other);
 	Animator(const Animator& other);
 	~Animator() {};
-	void AddAnimation(const std::string name, Animation animation);
+	void AddAnimation(const std::string &name, Animation animation);
 	void Update(float dt);
 	void PlayAnimation(const std::string& animation, bool looping, bool interruptible);
 	// Plays the animation only if it's not already playing

@@ -9,7 +9,10 @@ class MainScene : public Scene
 {
 public:
 	MainScene(const std::string& name, Camera* mainCamera, Renderer* renderer);
+	void Load() override;
 	void Start() override;
 	void Update(float dt) override;
+	void End() override;
+	void Unload() override;
 };
 

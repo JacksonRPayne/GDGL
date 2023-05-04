@@ -16,8 +16,8 @@ public:
 	static void LoadTexture(const char* path, const std::string& name, bool alpha = true);
 
 	// TODO: add checks to see if key exists
-	static Texture* GetTexture(const std::string& name) { return textureMap[name]; }
-	static Shader* GetShader(const std::string& name) { return shaderMap[name]; }
+	static Texture* GetTexture(const std::string& name);
+	static Shader* GetShader(const std::string& name);
 
 	// Deallocates all resources
 	static void FreeAll();

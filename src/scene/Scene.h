@@ -13,9 +13,12 @@ public:
 
 	Scene(const std::string &name, Camera* mainCamera, Renderer* renderer);
 
+	// Loads in resources and creates entities
+	virtual void Load(){}
 	virtual void Start() {}
 	virtual void Update(float dt) {}
 	virtual void End() {}
+	virtual void Unload(){}
 
 	const std::string& GetName() const { return name; } 
 	// TODO: delete these OOP scum
@@ -25,7 +28,8 @@ public:
 	// Doesn't have ownership of these
 	Camera* mainCamera;
 	Renderer* renderer;
-	// TODO: deallocate entities. The issue is if it's in destructor it's gonna make scene construction hard
+
+	bool loaded;
 
 protected:
 	// TODO: Unload and load resources should be in scene manager and just be functions that load all the stuff and construct scene

@@ -49,7 +49,7 @@ int Game::Run() {
         renderer.drawCalls = 0;
 #endif // _DEBUG
 #ifdef _DEBUG
-        std::cout << "FPS: " << 1.0f / deltaTime << "\t" << "Draw Calls:" << renderer.drawCalls << '\n';
+       // std::cout << "FPS: " << 1.0f / deltaTime << "\t" << "Draw Calls:" << renderer.drawCalls << '\n';
 #endif // _DEBUG
 
         // Swap front and back buffers 

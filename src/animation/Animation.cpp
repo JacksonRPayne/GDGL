@@ -13,9 +13,11 @@ Animation::Animation(const Animation& other)
 currentFrame(other.currentFrame), playTime(other.playTime), playing(other.playing),
 looping(other.looping), interruptible(other.interruptible), animator(other.animator),
 animEndCallback(other.animEndCallback){
+	std::cout << "Animation copied" << "\n";
 }
 
 Animation& Animation::operator=(const Animation& other) {
+	std::cout << "Animation assigned" << "\n";
 	name = other.name;
 	playSpeed = other.playSpeed;
 	// Deep copy frames

@@ -18,27 +18,40 @@ struct MainEntities {
 
 		renderer->End();
 	}
+
 };
 
 static MainEntities entities = MainEntities();
 
+
 MainScene::MainScene(const std::string& name, Camera* mainCamera, Renderer* renderer) 
 	: Scene(name, mainCamera, renderer){}
 
-// TODO: to avoid OOP, you could add camera and renderer to mainscene data, and pass arguments into Start(Camera* camera, Renderer* renderer) like a constructor
-void MainScene::Start() {
+
+void MainScene::Load() {
 	ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
 	// TODO: you're gonna want to look into move semantics...
 	// -- especially in the animation and animator classes, or really anything with a member thats a collection
 	entities.zach = Zach(0.0f, 0.0f, 1.0f, 1.0f, 0.0f, ResourceManager::GetTexture("zach"));
 	entities.spawnedZachs = std::vector<Zach>();
+	loaded = true;
+}
+
+
+// TODO: to avoid OOP, you could add camera and renderer to mainscene data, and pass arguments into Start(Camera* camera, Renderer* renderer) like a constructor
+void MainScene::Start() {
+
 }
 
 void MainScene::Update(float dt) {
-	if (InputManager::GetMouseButton(GLFW_MOUSE_BUTTON_1)) {
+	if (InputManager::GetMouseButtonDown(GLFW_MOUSE_BUTTON_1)) {
 		glm::vec2 mousePos = InputManager::GetWorldMousePos(Window::width, Window::height, mainCamera->right, mainCamera->transform);
 		Zach zach = Zach(mousePos.x, mousePos.y, 1.0f, 1.0f, 0.0f, ResourceManager::GetTexture("zach"));
 		entities.spawnedZachs.push_back(zach);
+	}
+
+	if (InputManager::GetKeyDown(GLFW_KEY_L)) {
+		SceneManager::SetCurrentScene("main");
 	}
 
 	// UPDATE:
@@ -47,6 +60,17 @@ void MainScene::Update(float dt) {
 	// RENDER
 	entities.Render(renderer);
 
+}
+
+void MainScene::End() {
+	Unload();
+}
+
+void MainScene::Unload() {
+	// Unload all the stuff
+	entities = MainEntities();
+	//ResourceManager::UnloadTexture("zach");
+	loaded = false;
 }
 
 // TODO: NOTE: Unload scene:

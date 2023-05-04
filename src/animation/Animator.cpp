@@ -6,6 +6,7 @@ Animator::Animator() : animMap(), animQueue(), currentAnimation(), playingAnimat
 
 Animator& Animator::operator=(const Animator& other) 
 {
+	std::cout << "Animator assigned" << "\n";
 	// Deep copies maps
 	this->animMap = std::unordered_map<std::string, Animation>(other.animMap);
 	this->animQueue = std::queue<std::string>(other.animQueue);
@@ -26,6 +27,7 @@ Animator& Animator::operator=(const Animator& other)
 }
 
 Animator::Animator(const Animator& other) {
+	std::cout << "Animator copied" << "\n";
 	// Deep copies maps
 	this->animMap = std::unordered_map<std::string, Animation>(other.animMap);
 	this->animQueue = std::queue<std::string>(other.animQueue);
@@ -58,7 +60,7 @@ void Animator::AnimEndCallback() {
 }
 
 
-void Animator::AddAnimation(const std::string name, Animation animation) {
+void Animator::AddAnimation(const std::string &name, Animation animation) {
 	animation.SetAnimator(this);
 	animation.SetAnimEndCallback(&Animator::AnimEndCallback);
 	animation.name = name;
