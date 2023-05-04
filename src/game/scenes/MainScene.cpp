@@ -29,10 +29,10 @@ MainScene::MainScene(const std::string& name, Camera* mainCamera, Renderer* rend
 
 
 void MainScene::Load() {
-	ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
 	// TODO: you're gonna want to look into move semantics...
 	// -- especially in the animation and animator classes, or really anything with a member thats a collection
-	entities.zach = Zach(0.0f, 0.0f, 1.0f, 1.0f, 0.0f, ResourceManager::GetTexture("zach"));
+	ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
+	entities.zach = Zach(0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
 	entities.spawnedZachs = std::vector<Zach>();
 	loaded = true;
 }
@@ -46,7 +46,7 @@ void MainScene::Start() {
 void MainScene::Update(float dt) {
 	if (InputManager::GetMouseButtonDown(GLFW_MOUSE_BUTTON_1)) {
 		glm::vec2 mousePos = InputManager::GetWorldMousePos(Window::width, Window::height, mainCamera->right, mainCamera->transform);
-		Zach zach = Zach(mousePos.x, mousePos.y, 1.0f, 1.0f, 0.0f, ResourceManager::GetTexture("zach"));
+		Zach zach = Zach(mousePos.x, mousePos.y, 1.0f, 1.0f, 0.0f);
 		entities.spawnedZachs.push_back(zach);
 	}
 
@@ -69,6 +69,8 @@ void MainScene::End() {
 void MainScene::Unload() {
 	// Unload all the stuff
 	entities = MainEntities();
+	// Not totally necessary -- should only really be called if entity is only in this scene
+	Zach::UnloadAnimations();
 	//ResourceManager::UnloadTexture("zach");
 	loaded = false;
 }

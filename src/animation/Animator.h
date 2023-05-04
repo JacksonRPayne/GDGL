@@ -1,11 +1,11 @@
 #pragma once
-#include "Animation.h"
 #include <map>
 #include <unordered_map>
 #include <string>
 #include <queue>
 #include <iostream>
 #include <sstream>
+#include "Animation.h"
 #include "system/Log.h"
 
 class Animation;

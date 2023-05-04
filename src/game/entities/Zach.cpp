@@ -1,20 +1,20 @@
 #include "Zach.h"
 
-Zach::Zach(float xPos, float yPos, float xScale, float yScale, float rotation, int layer)
-	: Entity(xPos, yPos, xScale, yScale, rotation, layer), textureAtlas(nullptr), subTexture(SubTexture()), animator()
-{
-}
+Animation Zach::idle;
+Animation Zach::walk;
+Texture* Zach::textureAtlas;
 
-Zach::Zach(float xPos, float yPos, float xScale, float yScale, float rotation, Texture* spriteAtlas, int layer)
-	: Entity(xPos, yPos, xScale, yScale, rotation, layer), textureAtlas(spriteAtlas), subTexture(SubTexture(spriteAtlas, 0, 0, 128, 128)), animator()
+Zach::Zach(float xPos, float yPos, float xScale, float yScale, float rotation, int layer)
+	: Entity(xPos, yPos, xScale, yScale, rotation, layer), subTexture(SubTexture()), animator()
 {
 	InitializeAnimations();
 }
 
-void Zach::InitializeAnimations() {
-	// TODO: if you really want to spawn a lot of zachs, put this somewhere to only be called once and reference it
-	// TODO: with move semantics, can I take this animation and move it all the way into the animator with no copies?
-	Animation idle = Animation();
+void Zach::LoadAnimations() {
+	// Loads atlas for all Zachs
+	if(!textureAtlas) textureAtlas = ResourceManager::GetTexture("zach");
+	// Creates idle animation
+	idle = Animation();
 	idle.SetPlaySpeed(ANIM_SPEED);
 	idle.AddFrame(Frame(SubTexture(textureAtlas, 0, 0, 128, 128)));
 	idle.AddFrame(Frame(SubTexture(textureAtlas, 1 * 128, 0, 128, 128)));
@@ -27,10 +27,9 @@ void Zach::InitializeAnimations() {
 	idle.AddFrame(Frame(SubTexture(textureAtlas, 3 * 128, 0, 128, 128)));
 	idle.AddFrame(Frame(SubTexture(textureAtlas, 2 * 128, 0, 128, 128)));
 	idle.AddFrame(Frame(SubTexture(textureAtlas, 1 * 128, 0, 128, 128)));
-
-	animator.AddAnimation("Idle", idle);
-
-	Animation walk = Animation();
+	
+	// Creates walk animation
+	walk = Animation();
 	walk.SetPlaySpeed(ANIM_SPEED);
 	walk.AddFrame(Frame(SubTexture(textureAtlas, 0, 128, 128, 128)));
 	walk.AddFrame(Frame(SubTexture(textureAtlas, 1 * 128, 128, 128, 128)));
@@ -40,7 +39,17 @@ void Zach::InitializeAnimations() {
 	walk.AddFrame(Frame(SubTexture(textureAtlas, 5 * 128, 128, 128, 128)));
 	walk.AddFrame(Frame(SubTexture(textureAtlas, 6 * 128, 128, 128, 128)));
 	walk.AddFrame(Frame(SubTexture(textureAtlas, 7 * 128, 128, 128, 128)));
+}
 
+void Zach::UnloadAnimations() {
+	idle = Animation();
+	walk = Animation();
+}
+
+void Zach::InitializeAnimations() {
+	if (!idle.GetFrames().size()) Zach::LoadAnimations();
+	// TODO: with move semantics, can I take this animation and move it all the way into the animator with no copies? 
+	animator.AddAnimation("Idle", idle);
 	animator.AddAnimation("Walk", walk);
 }
 

@@ -14,6 +14,7 @@ void SceneManager::AddScene(Scene* scene) {
 	if (currentScene == nullptr) {
 		if (!scene->loaded) scene->Load();
 		currentScene = scene;
+		currentScene->Start();
 	}
 }
 
