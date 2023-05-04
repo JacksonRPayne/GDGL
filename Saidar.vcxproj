@@ -137,7 +137,7 @@
   <ItemGroup>
     <ClCompile Include="src\graphics\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\Renderer.cpp" />
-    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\game\Game.cpp" />
     <ClCompile Include="src\system\Log.cpp" />
     <ClCompile Include="src\graphics\SpriteRenderer.cpp" />
     <ClCompile Include="src\system\ResourceManager.cpp" />
@@ -156,12 +156,12 @@
     <ClCompile Include="vendor\glm\detail\glm.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\system\Window.cpp" />
-    <ClCompile Include="src\scene\Entities\Zach.cpp" />
+    <ClCompile Include="src\game\entities\Zach.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\BatchRenderer.h" />
     <ClInclude Include="src\graphics\Renderer.h" />
-    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\game\Game.h" />
     <ClInclude Include="src\system\Log.h" />
     <ClInclude Include="src\graphics\SpriteRenderer.h" />
     <ClInclude Include="src\system\ResourceManager.h" />
@@ -463,7 +463,7 @@
     <ClInclude Include="vendor\glm\vector_relational.hpp" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
     <ClInclude Include="src\system\Window.h" />
-    <ClInclude Include="src\scene\Entities\Zach.h" />
+    <ClInclude Include="src\game\entities\Zach.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\batch_default.frag" />
