@@ -1,26 +1,26 @@
 #include "Animator.h"
 
-Animator::Animator() : animMap(), animQueue(), currentAnimation(), playingAnimation(false), interruptible(true) {
-
-}
+Animator::Animator() : animMap(), animQueue(), currentAnimation(), playingAnimation(false),
+interruptible(true), animationData() {}
 
 Animator& Animator::operator=(const Animator& other) 
 {
 	std::cout << "Animator assigned" << "\n";
 	// Deep copies maps
-	this->animMap = std::unordered_map<std::string, Animation>(other.animMap);
+	this->animMap = std::unordered_map<std::string, Animation*>(other.animMap);
 	this->animQueue = std::queue<std::string>(other.animQueue);
 	this->currentAnimation = nullptr;
 	this->playingAnimation = false;
 	this->interruptible = true;
+	this->animationData = other.animationData;
 	// Adjusts pointers
 	for (auto& anim : animMap) {
-		anim.second.SetAnimator(this);
+		anim.second->SetAnimator(this);
 	}
 
 	// Preserves current animation
 	if (other.currentAnimation) {
-		this->currentAnimation = &animMap[other.currentAnimation->name];
+		this->currentAnimation = animMap[other.currentAnimation->name];
 	}
 
 	return *this;
@@ -29,19 +29,20 @@ Animator& Animator::operator=(const Animator& other)
 Animator::Animator(const Animator& other) {
 	std::cout << "Animator copied" << "\n";
 	// Deep copies maps
-	this->animMap = std::unordered_map<std::string, Animation>(other.animMap);
+	this->animMap = std::unordered_map<std::string, Animation*>(other.animMap);
 	this->animQueue = std::queue<std::string>(other.animQueue);
 	this->currentAnimation = nullptr;
 	this->playingAnimation = false;
 	this->interruptible = true;
+	this->animationData = other.animationData;
 	// Adjusts pointers
 	for (auto& anim : animMap) {
-		anim.second.SetAnimator(this);
+		anim.second->SetAnimator(this);
 	}
 
 	// Preserves current animation
 	if (other.currentAnimation) {
-		this->currentAnimation = &animMap[other.currentAnimation->name];
+		this->currentAnimation = animMap[other.currentAnimation->name];
 	}
 
 }
@@ -54,16 +55,15 @@ void Animator::AnimEndCallback() {
 		return;
 	}
 	// Play top member of animation queue
-	Animation* queuedAnim = &animMap[animQueue.front()];
+	Animation* queuedAnim = animMap[animQueue.front()];
 	ActivateAnimation(queuedAnim, queuedAnim->Interruptible());
 	animQueue.pop();
 }
 
 
-void Animator::AddAnimation(const std::string &name, Animation animation) {
-	animation.SetAnimator(this);
-	animation.SetAnimEndCallback(&Animator::AnimEndCallback);
-	animation.name = name;
+void Animator::AddAnimation(const std::string &name, Animation* animation) {
+	animation->SetAnimator(this);
+	animation->name = name;
 	animMap[name] = animation;
 }
 
@@ -86,18 +86,20 @@ void Animator::PlayAnimation(const std::string& animation, bool looping=false, b
 		return;
 	}
 	// Set animation properties
-	// Pitfall of this is that you can't queue two
-	// of the same animation with different settings
-	Animation* anim = &(animMap[animation]);
-	anim->SetLooping(looping);
-	anim->SetInterruptible(interruptible);
+	Animation* anim = (animMap[animation]);
+	/*anim->SetLooping(looping);
+	anim->SetInterruptible(interruptible);*/
 	// An uninterruptible animation is playing
+	animationData.looping = looping;
+	animationData.interruptible = interruptible;
+	/*TODO
 	if (playingAnimation && !this->interruptible) {
         animQueue.push(animation);
 		return;
-	}
+	}*/
+
 	// An interuptible animation is playing -- stop it
-	if (playingAnimation) currentAnimation->Stop();
+	if (playingAnimation) currentAnimation->Stop(&animationData);
 
 	ActivateAnimation(anim, interruptible);
 }
@@ -107,12 +109,12 @@ void Animator::ActivateAnimation(Animation* animation, bool interruptible) {
 	playingAnimation = true;
 	currentAnimation = animation;
 	this->interruptible = interruptible;
-	animation->Play();
+	animation->Play(&animationData);
 }
 
 
 void Animator::Update(float dt) {
-	currentAnimation->Update(dt);
+	currentAnimation->Update(dt, &animationData);
 }
 
-const Frame& Animator::GetCurrentFrame() { return currentAnimation->GetCurrentFrame(); }
+const Frame& Animator::GetCurrentFrame() { return currentAnimation->GetCurrentFrame(&animationData); }

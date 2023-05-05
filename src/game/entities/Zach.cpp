@@ -49,8 +49,8 @@ void Zach::UnloadAnimations() {
 void Zach::InitializeAnimations() {
 	if (!idle.GetFrames().size()) Zach::LoadAnimations();
 	// TODO: with move semantics, can I take this animation and move it all the way into the animator with no copies? 
-	animator.AddAnimation("Idle", idle);
-	animator.AddAnimation("Walk", walk);
+	animator.AddAnimation("Idle", &idle);
+	animator.AddAnimation("Walk", &walk);
 }
 
 void Zach::SetTexture(Texture* texture) {

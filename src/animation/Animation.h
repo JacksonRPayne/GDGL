@@ -6,6 +6,7 @@
 #define MIN_PLAY_SPEED  0.01f
 
 class Animator;
+struct AnimationData;
 
 struct Frame {
 	Frame(const SubTexture &subTex) : subTexture(subTex){}
@@ -24,7 +25,7 @@ public:
 	// Getters
 	float GetPlaySpeed() { return playSpeed; }
 	const std::vector<Frame>& GetFrames() { return frames; }
-	const Frame& GetCurrentFrame() { return frames[currentFrame]; }
+	const Frame& GetCurrentFrame(AnimationData* data);
 	bool Playing() { return playing; }
 	bool Loops() { return looping; }
 	bool Interruptible()  { return interruptible; }
@@ -34,13 +35,12 @@ public:
 	void AddFrame(const Frame &frame) { frames.push_back(frame); }
 	void SetLooping(bool shouldLoop) { looping = shouldLoop; }
 	void SetInterruptible(bool inter) { interruptible = inter; }
-	void SetAnimEndCallback(void (Animator::*func)()) { animEndCallback = func; }
 	void SetAnimator(Animator* anim) { animator = anim; }
 
 	// Updates the internal clock of the animation
-	void Update(float dt);
-	void Play();
-	void Stop();
+	void Update(float dt, AnimationData* data);
+	void Play(AnimationData* data);
+	void Stop(AnimationData* data);
 
 	std::string name;
 
@@ -56,9 +56,7 @@ private:
 	bool interruptible;
 	// The calling animator
 	Animator* animator;
-	// Function pointer to function that should be called when animation ends (set automatically by animator)
-	void (Animator::* animEndCallback)();
 	// Called at the end of the animation, either loops it again or ends it
-	void AnimationEnd();
+	void AnimationEnd(AnimationData* data);
 };
 

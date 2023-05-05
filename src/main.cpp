@@ -18,12 +18,9 @@
 // Scene
 // -- Convert to struct of function pointers? (or anything light weight and non OOP)
 // 
-// Animation/Animator
-// -- Complete refactor, organize and document
-// 
 // Collision detection
 // -- Hitbox class
-// -- That tree data structure
+// -- That tree data structure (quadtree i believe)
 // 
 // "Physics"
 // -- Velocity values for entity
