@@ -10,6 +10,26 @@ Zach::Zach(float xPos, float yPos, float xScale, float yScale, float rotation, i
 	InitializeAnimations();
 }
 
+Zach::Zach(Zach&& other) noexcept {
+	std::cout << "Zach move constructor" << '\n';
+	this->transform = other.transform;
+	this->animator = std::move(other.animator);
+	this->subTexture = other.subTexture;
+	this->walkSpeed = other.walkSpeed;
+}
+
+Zach& Zach::operator=(Zach&& other) noexcept {
+	std::cout << "Zach move assignment" << '\n';
+	if (this != &other) {
+		this->transform = other.transform;
+		this->animator = std::move(other.animator);
+		this->subTexture = other.subTexture;
+		this->walkSpeed = other.walkSpeed;
+	}
+
+	return *this;
+}
+
 void Zach::LoadAnimations() {
 	// Loads atlas for all Zachs
 	if(!textureAtlas) textureAtlas = ResourceManager::GetTexture("zach");
@@ -60,7 +80,7 @@ void Zach::SetTexture(Texture* texture) {
 }
 
 void Zach::Render(Renderer* renderer) {
-	renderer->DrawQuad(textureAtlas, subTexture, transform.GetModelMatrix());
+	renderer->DrawQuad(Zach::textureAtlas, subTexture, transform.GetModelMatrix());
 }
 
 void Zach::RenderMultiple(Renderer* renderer, std::vector<Zach>* zachs) {

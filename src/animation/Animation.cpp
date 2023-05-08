@@ -1,17 +1,13 @@
 #include "Animation.h"
 
-Animation::Animation() : frames(), playSpeed(MIN_PLAY_SPEED), playTime(0.0f),
-currentFrame(0), playing(false), looping(false), interruptible(false), animator(nullptr) {}
+Animation::Animation() : frames(), playSpeed(MIN_PLAY_SPEED){}
 
-Animation::Animation(const std::vector<Frame>& frames, float playSpeed) : playSpeed(playSpeed), playTime(0.0f),
-	currentFrame(0), playing(false), looping(false), interruptible(false) {
+Animation::Animation(const std::vector<Frame>& frames, float playSpeed) : playSpeed(playSpeed){
 	SetFrames(frames);
 }
 
 Animation::Animation(const Animation& other) 
-	: name(other.name), playSpeed(other.playSpeed), frames(std::vector<Frame>(other.frames)), 
-currentFrame(other.currentFrame), playTime(other.playTime), playing(other.playing),
-looping(other.looping), interruptible(other.interruptible), animator(other.animator){
+	: name(other.name), playSpeed(other.playSpeed), frames(std::vector<Frame>(other.frames)){
 	std::cout << "Animation copied" << "\n";
 }
 
@@ -21,14 +17,9 @@ Animation& Animation::operator=(const Animation& other) {
 	playSpeed = other.playSpeed;
 	// Deep copy frames
 	frames = std::vector<Frame>(other.frames);
-	currentFrame = other.currentFrame;
-	playTime = other.playTime;
-	playing = other.playing;
-	looping = other.looping;
-	interruptible = other.interruptible;
-	animator = other.animator;
 	return *this;
 }
+
 
 
 void Animation::Play(AnimationData* data) {
@@ -66,5 +57,6 @@ void Animation::AnimationEnd(AnimationData* data) {
 void Animation::Stop(AnimationData* data) {
 	data->playing = false;
 	// Invoke callback
-	animator->AnimEndCallback();
+	// TODO: figure this out
+	//animator->AnimEndCallback();
 }

@@ -12,6 +12,8 @@ class Zach : public Entity
 public:
 	Zach(){}
 	Zach(float xPos, float yPos, float xScale, float yScale, float rotation, int layer = 0);
+	Zach& operator=(Zach&& other) noexcept;
+	Zach(Zach&& other) noexcept;
 
 	void Render(Renderer* renderer) override;
 	void Update(float dt) override;

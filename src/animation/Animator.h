@@ -23,11 +23,16 @@ struct AnimationData {
 class Animator {
 	
 public:
-	//TODO: Review this and animation class, document more and clean up
 	Animator();
+	// Copy
 	Animator& operator=(const Animator& other);
 	Animator(const Animator& other);
+	// Move
+	Animator(Animator&& other) noexcept;
+	Animator& operator=(Animator&& other) noexcept;
+
 	~Animator() {};
+
 	void AddAnimation(const std::string &name, Animation* animation);
 	void Update(float dt);
 	void PlayAnimation(const std::string& animation, bool looping, bool interruptible);
@@ -42,7 +47,6 @@ public:
 private:
 	AnimationData animationData;
 	// Map of animations to their name
-	// TODO: change to pointers
 	std::unordered_map<std::string, Animation*> animMap;
 	// Stores animations on deck to be played. If one animation is not interruptable, the next will play when it's finished.
 	// TODO: you're gonna have to add animationdata for each animation

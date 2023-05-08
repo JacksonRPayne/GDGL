@@ -13,15 +13,7 @@ Animator& Animator::operator=(const Animator& other)
 	this->playingAnimation = false;
 	this->interruptible = true;
 	this->animationData = other.animationData;
-	// Adjusts pointers
-	for (auto& anim : animMap) {
-		anim.second->SetAnimator(this);
-	}
-
-	// Preserves current animation
-	if (other.currentAnimation) {
-		this->currentAnimation = animMap[other.currentAnimation->name];
-	}
+	this->currentAnimation = other.currentAnimation;
 
 	return *this;
 }
@@ -35,16 +27,37 @@ Animator::Animator(const Animator& other) {
 	this->playingAnimation = false;
 	this->interruptible = true;
 	this->animationData = other.animationData;
-	// Adjusts pointers
-	for (auto& anim : animMap) {
-		anim.second->SetAnimator(this);
-	}
+	this->currentAnimation = other.currentAnimation;
 
-	// Preserves current animation
-	if (other.currentAnimation) {
-		this->currentAnimation = animMap[other.currentAnimation->name];
-	}
+}
 
+Animator::Animator(Animator&& other) noexcept{
+	std::cout << "Animator move constructor" << "\n";
+	// Moves maps
+	this->animMap = std::move(other.animMap);
+	this->animQueue = std::move(other.animQueue);
+	this->currentAnimation = nullptr;
+	this->playingAnimation = false;
+	this->interruptible = true;
+	this->animationData = other.animationData;
+	this->currentAnimation = other.currentAnimation;
+
+}
+
+Animator& Animator::operator=(Animator&& other) noexcept {
+	std::cout << "Animator move constructor" << "\n";
+	if (this != &other) {
+		// Moves maps
+		this->animMap = std::move(other.animMap);
+		this->animQueue = std::move(other.animQueue);
+		this->currentAnimation = nullptr;
+		this->playingAnimation = false;
+		this->interruptible = true;
+		this->animationData = other.animationData;
+		this->currentAnimation = other.currentAnimation;
+	}
+	
+	return *this;
 }
 
 void Animator::AnimEndCallback() {
@@ -54,15 +67,14 @@ void Animator::AnimEndCallback() {
 		playingAnimation = false;
 		return;
 	}
-	// Play top member of animation queue
+	/* TODO: Play top member of animation queue
 	Animation* queuedAnim = animMap[animQueue.front()];
 	ActivateAnimation(queuedAnim, queuedAnim->Interruptible());
-	animQueue.pop();
+	animQueue.pop();*/
 }
 
 
 void Animator::AddAnimation(const std::string &name, Animation* animation) {
-	animation->SetAnimator(this);
 	animation->name = name;
 	animMap[name] = animation;
 }

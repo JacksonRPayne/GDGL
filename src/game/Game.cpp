@@ -45,11 +45,9 @@ int Game::Run() {
 
 
         SceneManager::Update(deltaTime);
+
 #ifdef _DEBUG
-        renderer.drawCalls = 0;
-#endif // _DEBUG
-#ifdef _DEBUG
-       // std::cout << "FPS: " << 1.0f / deltaTime << "\t" << "Draw Calls:" << renderer.drawCalls << '\n';
+        Log::LogFPS(deltaTime, 1000);
 #endif // _DEBUG
 
         // Swap front and back buffers 

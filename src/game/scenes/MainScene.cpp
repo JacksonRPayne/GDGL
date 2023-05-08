@@ -3,6 +3,9 @@
 struct MainEntities {
 	MainEntities() = default;
 	Zach zach;
+	// NOTE/TODO: try to make these arrays as much as possible
+	// Vector reallocation gets super slow with mad entities bc theyre not pointers :(
+	// ^-- although when am I gonna spawn a billion entities realistically
 	std::vector<Zach> spawnedZachs;
 
 	void Update(float dt) {
@@ -32,7 +35,7 @@ void MainScene::Load() {
 	// TODO: you're gonna want to look into move semantics...
 	// -- especially in the animation and animator classes, or really anything with a member thats a collection
 	ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
-	entities.zach = Zach(0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
+	entities.zach = std::move(Zach(0.0f, 0.0f, 1.0f, 1.0f, 0.0f));
 	entities.spawnedZachs = std::vector<Zach>();
 	loaded = true;
 }
@@ -44,16 +47,27 @@ void MainScene::Start() {
 }
 
 void MainScene::Update(float dt) {
-	if (InputManager::GetMouseButtonDown(GLFW_MOUSE_BUTTON_1)) {
+	if (InputManager::GetMouseButton(GLFW_MOUSE_BUTTON_1)) {
 		glm::vec2 mousePos = InputManager::GetWorldMousePos(Window::width, Window::height, mainCamera->right, mainCamera->transform);
-		Zach zach = Zach(mousePos.x, mousePos.y, 1.0f, 1.0f, 0.0f);
-		entities.spawnedZachs.push_back(zach);
+		entities.spawnedZachs.emplace_back(mousePos.x, mousePos.y, 1.0f, 1.0f, 0.0f);
 	}
 
 	if (InputManager::GetKeyDown(GLFW_KEY_L)) {
 		SceneManager::SetCurrentScene("main");
 	}
 
+	if (InputManager::GetKey(GLFW_KEY_D)) {
+		mainCamera->transform.Translate(2 * dt, 0.0f);
+	}
+	else if (InputManager::GetKey(GLFW_KEY_A)) {
+		mainCamera->transform.Translate(-2 *dt, 0.0f);
+	}
+	if (InputManager::GetKeyDown(GLFW_KEY_S)) {
+		mainCamera->transform.ScaleFactor(2.0f, 2.0f);
+	}
+	else if (InputManager::GetKeyDown(GLFW_KEY_W)) {
+		mainCamera->transform.ScaleFactor(0.5f, 0.5f);
+	}
 	// UPDATE:
 	entities.Update(dt);
 
