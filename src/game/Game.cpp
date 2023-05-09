@@ -46,9 +46,8 @@ int Game::Run() {
 
         SceneManager::Update(deltaTime);
 
-#ifdef _DEBUG
-        Log::LogFPS(deltaTime, 1000);
-#endif // _DEBUG
+        Log::LogFPS(deltaTime, 100);
+
 
         // Swap front and back buffers 
         window->SwapBuffers();

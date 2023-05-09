@@ -3,6 +3,7 @@
 #include "animation/Animation.h"
 #include "system/InputManager.h"
 #include "system/ResourceManager.h"
+#include "physics/PhysicsController.h"
 #define ANIM_SPEED 9.0f
 
 
@@ -39,6 +40,7 @@ public:
 private:
 	void InitializeAnimations();
 	Animator animator;
+	PhysicsController physicsController;
 
 	static Texture* textureAtlas;
 	SubTexture subTexture;

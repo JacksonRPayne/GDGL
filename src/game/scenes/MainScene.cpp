@@ -32,11 +32,10 @@ MainScene::MainScene(const std::string& name, Camera* mainCamera, Renderer* rend
 
 
 void MainScene::Load() {
-	// TODO: you're gonna want to look into move semantics...
-	// -- especially in the animation and animator classes, or really anything with a member thats a collection
+
 	ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
 	entities.zach = std::move(Zach(0.0f, 0.0f, 1.0f, 1.0f, 0.0f));
-	entities.spawnedZachs = std::vector<Zach>();
+	entities.spawnedZachs.reserve(10000);
 	loaded = true;
 }
 
@@ -88,15 +87,4 @@ void MainScene::Unload() {
 	//ResourceManager::UnloadTexture("zach");
 	loaded = false;
 }
-
-// TODO: NOTE: Unload scene:
-// -- How do we get rid of the memory allocated from static MainEntities entities ?
-// -- One idea:
-// SceneUnload(){
-// entities.field1 = nothing;
-// entities.field2 = nothing;
-// etc;
-// }
-// But question: what is nullptr equivalent of stack allocated object that I can set these to?? Do i HAVE to call default constructors?
-// Aha (maybe): call destructor *explicitly* ? SceneUnload(){ entities.~MainEntities(); }
 

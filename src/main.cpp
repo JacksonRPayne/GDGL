@@ -2,9 +2,7 @@
 
 // TODO: 
 // Animations:
-// -- Move state of animation into animator
-// -- Animations should be pointers -- there's no point duplicating them for every object using it
-// -- maybe make animdata struct with state data for current animation, and pass that into Animation methods
+// -- Reimplement queueing system
 // 
 // Move semantics:
 // -- Figure out best way to deal with stack objects, and initializing

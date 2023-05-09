@@ -5,7 +5,7 @@ Animation Zach::walk;
 Texture* Zach::textureAtlas;
 
 Zach::Zach(float xPos, float yPos, float xScale, float yScale, float rotation, int layer)
-	: Entity(xPos, yPos, xScale, yScale, rotation, layer), subTexture(SubTexture()), animator()
+	: Entity(xPos, yPos, xScale, yScale, rotation, layer), subTexture(SubTexture()), animator(), physicsController(&transform)
 {
 	InitializeAnimations();
 }
@@ -16,6 +16,8 @@ Zach::Zach(Zach&& other) noexcept {
 	this->animator = std::move(other.animator);
 	this->subTexture = other.subTexture;
 	this->walkSpeed = other.walkSpeed;
+	this->physicsController = other.physicsController;
+	physicsController.SetTransform(&transform);
 }
 
 Zach& Zach::operator=(Zach&& other) noexcept {
@@ -25,6 +27,9 @@ Zach& Zach::operator=(Zach&& other) noexcept {
 		this->animator = std::move(other.animator);
 		this->subTexture = other.subTexture;
 		this->walkSpeed = other.walkSpeed;
+		this->physicsController = other.physicsController;
+		physicsController.SetTransform(&transform);
+
 	}
 
 	return *this;
@@ -90,6 +95,9 @@ void Zach::RenderMultiple(Renderer* renderer, std::vector<Zach>* zachs) {
 }
 
 void Zach::Update(float dt) {
+
+	physicsController.acceleration.x = 0.1f;
+
 	if (InputManager::GetKey(GLFW_KEY_RIGHT)) {
 		animator.PlayOnce("Walk", true, true);
 		transform.Translate(walkSpeed * dt, 0.0f);
@@ -104,6 +112,7 @@ void Zach::Update(float dt) {
 		animator.PlayOnce("Idle", true, true);
 	}
 
+	physicsController.Update(dt);
 	animator.Update(dt);
 	subTexture = animator.GetCurrentFrame().subTexture;
 }

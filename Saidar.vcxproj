@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\physics\PhysicsController.cpp" />
     <ClCompile Include="src\game\scenes\MainScene.cpp" />
     <ClCompile Include="src\graphics\BatchRenderer.cpp" />
     <ClCompile Include="src\graphics\Renderer.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="src\game\entities\Zach.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\physics\PhysicsController.h" />
     <ClInclude Include="src\game\scenes\MainScene.h" />
     <ClInclude Include="src\graphics\BatchRenderer.h" />
     <ClInclude Include="src\graphics\Renderer.h" />
