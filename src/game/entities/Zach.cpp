@@ -95,9 +95,14 @@ void Zach::RenderMultiple(Renderer* renderer, std::vector<Zach>* zachs) {
 }
 
 void Zach::Update(float dt) {
-
-	physicsController.acceleration.x = 0.1f;
-
+	
+	if (transform.GetPosition().y < 0.5f) {
+		physicsController.acceleration.y = 5.0f;
+	}
+	else {
+		physicsController.acceleration.y = 0.0f;
+		physicsController.velocity.y = 0.0f;
+	}
 	if (InputManager::GetKey(GLFW_KEY_RIGHT)) {
 		animator.PlayOnce("Walk", true, true);
 		transform.Translate(walkSpeed * dt, 0.0f);
@@ -110,6 +115,10 @@ void Zach::Update(float dt) {
 	}
 	else {
 		animator.PlayOnce("Idle", true, true);
+	}
+
+	if (InputManager::GetKeyDown(GLFW_KEY_UP)) {
+		physicsController.velocity.y = -2.0f;
 	}
 
 	physicsController.Update(dt);

@@ -34,7 +34,7 @@ MainScene::MainScene(const std::string& name, Camera* mainCamera, Renderer* rend
 void MainScene::Load() {
 
 	ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
-	entities.zach = std::move(Zach(0.0f, 0.0f, 1.0f, 1.0f, 0.0f));
+	entities.zach = std::move(Zach(0.0f, 0.5f, 1.0f, 1.0f, 0.0f));
 	entities.spawnedZachs.reserve(10000);
 	loaded = true;
 }
