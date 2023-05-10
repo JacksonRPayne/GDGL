@@ -19,10 +19,9 @@
 // Collision detection
 // -- Hitbox class
 // -- That tree data structure (quadtree i believe)
+// -- Or just grid collision?
 // 
-// "Physics"
-// -- Velocity values for entity
-// 
+//
 // Audio
 // -- Library or from scratch?
 // 

@@ -1,9 +1,11 @@
 #pragma once
+#include "system/Window.h"
 #include "scene/Entity.h"
 #include "animation/Animation.h"
 #include "system/InputManager.h"
 #include "system/ResourceManager.h"
 #include "physics/PhysicsController.h"
+#include "physics/HitBox.h"
 #define ANIM_SPEED 9.0f
 
 
@@ -12,7 +14,7 @@ class Zach : public Entity
 {
 public:
 	Zach(){}
-	Zach(float xPos, float yPos, float xScale, float yScale, float rotation, int layer = 0);
+	Zach(float xPos, float yPos, float xScale, float yScale, float rotation, const std::string name="Zach", int layer = 0);
 	Zach& operator=(Zach&& other) noexcept;
 	Zach(Zach&& other) noexcept;
 
@@ -29,13 +31,13 @@ public:
 	// Destroys data in animations (if entity wont be used for a while)
 	static void UnloadAnimations();
 
-	// TODO: this is about to cause problems
-	// -- I want to turn animations into pointers for an Animator
-	// -- however, the state of an animations progress is stored in the animation object itself
-	// -- therefore if all entities share an animation, they share its progress as well.
-	// -- solution: move animation progress outside of animation object (put in animator?)
 	static Animation idle;
 	static Animation walk;
+	// Used to track if theres a zach being held by mouse
+	static Zach* grabbed;
+
+	HitBox hitBox;
+
 
 private:
 	void InitializeAnimations();

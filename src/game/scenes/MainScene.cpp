@@ -46,10 +46,11 @@ void MainScene::Start() {
 }
 
 void MainScene::Update(float dt) {
-	if (InputManager::GetMouseButton(GLFW_MOUSE_BUTTON_1)) {
+	if (InputManager::GetMouseButtonDown(GLFW_MOUSE_BUTTON_1)) {
 		glm::vec2 mousePos = InputManager::GetWorldMousePos(Window::width, Window::height, mainCamera->right, mainCamera->transform);
 		entities.spawnedZachs.emplace_back(mousePos.x, mousePos.y, 1.0f, 1.0f, 0.0f);
 	}
+
 
 	if (InputManager::GetKeyDown(GLFW_KEY_L)) {
 		SceneManager::SetCurrentScene("main");
@@ -66,6 +67,13 @@ void MainScene::Update(float dt) {
 	}
 	else if (InputManager::GetKeyDown(GLFW_KEY_W)) {
 		mainCamera->transform.ScaleFactor(0.5f, 0.5f);
+	}
+
+	// Collision checks
+	for (int i = 0; i < entities.spawnedZachs.size(); i++) {
+		if (entities.zach.hitBox.CheckCollision(entities.spawnedZachs[i].hitBox)) {
+			std::cout << "Zach hit" << '\n';
+		}
 	}
 	// UPDATE:
 	entities.Update(dt);

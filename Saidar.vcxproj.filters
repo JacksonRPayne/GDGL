@@ -87,6 +87,9 @@
     <ClCompile Include="src\physics\PhysicsController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\physics\HitBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\glad\glad.h">
@@ -1011,6 +1014,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\physics\PhysicsController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\physics\HitBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

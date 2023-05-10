@@ -3,10 +3,12 @@
 Animation Zach::idle;
 Animation Zach::walk;
 Texture* Zach::textureAtlas;
+Zach* Zach::grabbed = nullptr;
 
-Zach::Zach(float xPos, float yPos, float xScale, float yScale, float rotation, int layer)
-	: Entity(xPos, yPos, xScale, yScale, rotation, layer), subTexture(SubTexture()), animator(), physicsController(&transform)
+Zach::Zach(float xPos, float yPos, float xScale, float yScale, float rotation, const std::string name, int layer)
+	: Entity(xPos, yPos, xScale, yScale, rotation, name, layer), subTexture(SubTexture()), animator(), physicsController(&transform)
 {
+	hitBox = HitBox(0.0f, 0.0f, xScale/2.0f, yScale, this, HitBoxType::Player);
 	InitializeAnimations();
 }
 
@@ -18,6 +20,9 @@ Zach::Zach(Zach&& other) noexcept {
 	this->walkSpeed = other.walkSpeed;
 	this->physicsController = other.physicsController;
 	physicsController.SetTransform(&transform);
+	this->name = std::move(other.name);
+	this->hitBox = other.hitBox;
+	hitBox.parentEntity = this;
 }
 
 Zach& Zach::operator=(Zach&& other) noexcept {
@@ -29,7 +34,9 @@ Zach& Zach::operator=(Zach&& other) noexcept {
 		this->walkSpeed = other.walkSpeed;
 		this->physicsController = other.physicsController;
 		physicsController.SetTransform(&transform);
-
+		this->name = std::move(other.name);
+		this->hitBox = other.hitBox;
+		hitBox.parentEntity = this;
 	}
 
 	return *this;
@@ -95,14 +102,27 @@ void Zach::RenderMultiple(Renderer* renderer, std::vector<Zach>* zachs) {
 }
 
 void Zach::Update(float dt) {
-	
+	// Drag and drop zachs with right click
+	if (InputManager::GetMouseButton(GLFW_MOUSE_BUTTON_2)) {
+		glm::vec2 mousePos = InputManager::GetWorldMousePos(Window::width, Window::height, SceneManager::GetCurrentScene()->mainCamera->right, SceneManager::GetCurrentScene()->mainCamera->transform);
+		if ((!grabbed || grabbed == this) && hitBox.Contains(mousePos)) {
+			transform.SetPosition(mousePos);
+			grabbed = this;
+			return;
+		}
+	}
+	else {
+		grabbed = nullptr;
+	}
+	// Gravity
 	if (transform.GetPosition().y < 0.5f) {
-		physicsController.acceleration.y = 5.0f;
+		physicsController.acceleration.y = 9.0f;
 	}
 	else {
 		physicsController.acceleration.y = 0.0f;
 		physicsController.velocity.y = 0.0f;
 	}
+	// Movement
 	if (InputManager::GetKey(GLFW_KEY_RIGHT)) {
 		animator.PlayOnce("Walk", true, true);
 		transform.Translate(walkSpeed * dt, 0.0f);
@@ -116,11 +136,12 @@ void Zach::Update(float dt) {
 	else {
 		animator.PlayOnce("Idle", true, true);
 	}
-
+	// Jump
 	if (InputManager::GetKeyDown(GLFW_KEY_UP)) {
 		physicsController.velocity.y = -2.0f;
 	}
 
+	// Updates
 	physicsController.Update(dt);
 	animator.Update(dt);
 	subTexture = animator.GetCurrentFrame().subTexture;

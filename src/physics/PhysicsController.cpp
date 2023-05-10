@@ -10,6 +10,6 @@ void PhysicsController::Translate(glm::vec2 translation) {
 }
 
 void PhysicsController::Update(float dt) {
-	velocity += dt * acceleration;
 	Translate(dt * velocity);
+	velocity += dt * acceleration;
 }
