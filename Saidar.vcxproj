@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\entities\Baby.cpp" />
     <ClCompile Include="src\physics\HitBox.cpp" />
     <ClCompile Include="src\physics\PhysicsController.cpp" />
     <ClCompile Include="src\game\scenes\MainScene.cpp" />
@@ -162,6 +163,8 @@
     <ClCompile Include="src\game\entities\Zach.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\entities\Baby.h" />
+    <ClInclude Include="src\game\entities\Entities.h" />
     <ClInclude Include="src\physics\HitBox.h" />
     <ClInclude Include="src\physics\PhysicsController.h" />
     <ClInclude Include="src\game\scenes\MainScene.h" />
@@ -621,6 +624,7 @@
     <Text Include="vendor\glm\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\textures\Baby.png" />
     <Image Include="res\textures\background.jpg" />
     <Image Include="res\textures\Character.png" />
     <Image Include="res\textures\Guy.png" />

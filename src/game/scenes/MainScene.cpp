@@ -3,25 +3,26 @@
 struct MainEntities {
 	MainEntities() = default;
 	Zach zach;
+	Baby baby;
+	std::vector<Zach> spawnedZachs;
 	// NOTE/TODO: try to make these arrays as much as possible
 	// Vector reallocation gets super slow with mad entities bc theyre not pointers :(
 	// ^-- although when am I gonna spawn a billion entities realistically
-	std::vector<Zach> spawnedZachs;
-
 	void Update(float dt) {
 		zach.Update(dt);
+		baby.Update(dt);
 		Zach::UpdateMultiple(dt, &spawnedZachs);
 	}
 
 	void Render(Renderer* renderer) {
 		renderer->Start();
 
-		zach.Render(renderer);
+		//zach.Render(renderer);
+		baby.Render(renderer);
 		Zach::RenderMultiple(renderer, &spawnedZachs);
 
 		renderer->End();
 	}
-
 };
 
 static MainEntities entities = MainEntities();
@@ -34,8 +35,10 @@ MainScene::MainScene(const std::string& name, Camera* mainCamera, Renderer* rend
 void MainScene::Load() {
 
 	ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
+	ResourceManager::LoadTexture("res/textures/Baby.png", "baby");
 	entities.zach = std::move(Zach(0.0f, 0.5f, 1.0f, 1.0f, 0.0f));
-	entities.spawnedZachs.reserve(10000);
+	entities.baby = Baby(1.0f, 0.5f, 0.5f, 0.5f, 0.0f);
+	entities.spawnedZachs.reserve(100);
 	loaded = true;
 }
 
@@ -51,7 +54,6 @@ void MainScene::Update(float dt) {
 		entities.spawnedZachs.emplace_back(mousePos.x, mousePos.y, 1.0f, 1.0f, 0.0f);
 	}
 
-
 	if (InputManager::GetKeyDown(GLFW_KEY_L)) {
 		SceneManager::SetCurrentScene("main");
 	}
@@ -62,17 +64,19 @@ void MainScene::Update(float dt) {
 	else if (InputManager::GetKey(GLFW_KEY_A)) {
 		mainCamera->transform.Translate(-2 *dt, 0.0f);
 	}
-	if (InputManager::GetKeyDown(GLFW_KEY_S)) {
-		mainCamera->transform.ScaleFactor(2.0f, 2.0f);
+	if (InputManager::GetKey(GLFW_KEY_S)) {
+		mainCamera->transform.Scale(2.0f*dt, 2.0f * dt);
 	}
-	else if (InputManager::GetKeyDown(GLFW_KEY_W)) {
-		mainCamera->transform.ScaleFactor(0.5f, 0.5f);
+	else if (InputManager::GetKey(GLFW_KEY_W)) {
+		mainCamera->transform.Scale(-2.0f * dt, -2.0f * dt);
 	}
 
 	// Collision checks
 	for (int i = 0; i < entities.spawnedZachs.size(); i++) {
-		if (entities.zach.hitBox.CheckCollision(entities.spawnedZachs[i].hitBox)) {
-			std::cout << "Zach hit" << '\n';
+		entities.zach.hitBox.CheckCollision(entities.spawnedZachs[i].hitBox);
+		for (int j = 0; j < entities.spawnedZachs.size(); j++) {
+			if (j == i) continue;
+			entities.spawnedZachs[i].hitBox.CheckCollision(entities.spawnedZachs[j].hitBox);
 		}
 	}
 	// UPDATE:

@@ -90,6 +90,9 @@
     <ClCompile Include="src\physics\HitBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\entities\Baby.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\glad\glad.h">
@@ -1019,6 +1022,12 @@
     <ClInclude Include="src\physics\HitBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\game\entities\Baby.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\entities\Entities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\glm\detail\func_common.inl">
@@ -1454,6 +1463,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\textures\Character.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\Baby.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

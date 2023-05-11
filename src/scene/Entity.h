@@ -1,5 +1,4 @@
 #pragma once
-
 #include "graphics/Transform.h"
 #include "graphics/Texture.h"
 #include "graphics/SpriteRenderer.h"
@@ -20,8 +19,6 @@ public:
 	virtual void Render(Renderer* renderer) {}
 	// Overloaded with specific entity behavior
 	virtual void Update(float dt) {}
-	virtual void OnCollision(const HitBox &other){}
-
 
 	void SetRenderingLayer(int newLayer) { layer = std::min(newLayer, MAX_LAYERS); }
 	unsigned int GetRenderingLayer() { return layer; }

@@ -38,7 +38,6 @@ public:
 
 	HitBox hitBox;
 
-
 private:
 	void InitializeAnimations();
 	Animator animator;

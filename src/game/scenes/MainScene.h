@@ -2,7 +2,7 @@
 #include <vector>
 #include "scene/Scene.h"
 #include "system/ResourceManager.h"
-#include "game/entities/Zach.h"
+#include "game/entities/Entities.h"
 #include "system/Window.h"
 
 class MainScene : public Scene

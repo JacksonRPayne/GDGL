@@ -5,12 +5,33 @@ Animation Zach::walk;
 Texture* Zach::textureAtlas;
 Zach* Zach::grabbed = nullptr;
 
+void ZachOnCollision(const HitBox& thisHb, const HitBox& otherHb) {
+	if (otherHb.tag == HitBoxType::Player) {
+		// Get diff of vectors then negate then move that way
+		//glm::vec2 dist = other.parentEntity->transform.GetPosition() - transform.GetPosition();
+		glm::vec2 pos = thisHb.GetGlobalPosition();
+		glm::vec2 otherPos = otherHb.GetGlobalPosition();
+		glm::vec2 scale = 0.5f * thisHb.localTransform.GetScale();
+		glm::vec2 otherScale = 0.5f * otherHb.localTransform.GetScale();
+
+		// TODO: this is dumb
+		float sign = 0.0f;
+		if (otherPos.x > pos.x) sign = -1.0f;
+		else sign = 1.0f;
+
+		glm::vec2 interlap = (scale + otherScale) - glm::abs(pos - otherPos);
+		thisHb.parentEntity->transform.Translate(sign * interlap.x, 0.0f);
+	}
+}
+
 Zach::Zach(float xPos, float yPos, float xScale, float yScale, float rotation, const std::string name, int layer)
 	: Entity(xPos, yPos, xScale, yScale, rotation, name, layer), subTexture(SubTexture()), animator(), physicsController(&transform)
 {
-	hitBox = HitBox(0.0f, 0.0f, xScale/2.0f, yScale, this, HitBoxType::Player);
+	hitBox = HitBox(0.0f, 0.0f, xScale/2.0f, yScale, this, &ZachOnCollision, HitBoxType::Player);
 	InitializeAnimations();
 }
+
+#pragma region MOVE_CONSTRUCTORS
 
 Zach::Zach(Zach&& other) noexcept {
 	std::cout << "Zach move constructor" << '\n';
@@ -41,6 +62,7 @@ Zach& Zach::operator=(Zach&& other) noexcept {
 
 	return *this;
 }
+#pragma endregion
 
 void Zach::LoadAnimations() {
 	// Loads atlas for all Zachs
@@ -103,7 +125,7 @@ void Zach::RenderMultiple(Renderer* renderer, std::vector<Zach>* zachs) {
 
 void Zach::Update(float dt) {
 	// Drag and drop zachs with right click
-	if (InputManager::GetMouseButton(GLFW_MOUSE_BUTTON_2)) {
+	if (InputManager::GetKey(GLFW_KEY_G)){
 		glm::vec2 mousePos = InputManager::GetWorldMousePos(Window::width, Window::height, SceneManager::GetCurrentScene()->mainCamera->right, SceneManager::GetCurrentScene()->mainCamera->transform);
 		if ((!grabbed || grabbed == this) && hitBox.Contains(mousePos)) {
 			transform.SetPosition(mousePos);
@@ -146,6 +168,7 @@ void Zach::Update(float dt) {
 	animator.Update(dt);
 	subTexture = animator.GetCurrentFrame().subTexture;
 }
+
 
 void Zach::UpdateMultiple(float dt, std::vector<Zach>* zachs) {
 	for (int i = 0; i < zachs->size(); i++) {

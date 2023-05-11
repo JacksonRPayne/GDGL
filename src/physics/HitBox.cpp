@@ -1,13 +1,13 @@
 #include "Hitbox.h"
 
-HitBox::HitBox(): localTransform(), parentEntity(nullptr), tag(HitBoxType::None){}
+HitBox::HitBox(): localTransform(), parentEntity(nullptr), collisionCallback(nullptr), tag(HitBoxType::None), active(true){}
 
-HitBox::HitBox(float xPos, float yPos, float xScale, float yScale, Entity* parent, HitBoxType tag)
-	: localTransform(xPos, yPos, xScale, yScale, 0.0f), parentEntity(parent), tag(tag){
-
-}
+HitBox::HitBox(float xPos, float yPos, float xScale, float yScale, Entity* parent, 
+	void(*callback)(const HitBox& thisHitBox, const HitBox& otherHitBox), HitBoxType tag, bool active)
+	: localTransform(xPos, yPos, xScale, yScale, 0.0f), parentEntity(parent), collisionCallback(callback), tag(tag), active(active){}
 
 bool HitBox::CheckCollision(const HitBox& other) {
+	if (!active || !other.active) return false;
 	glm::vec2 otherPos = other.GetGlobalPosition();
 	glm::vec2 pos = GetGlobalPosition();
 	// Stores half size for easier border calculation
@@ -20,7 +20,7 @@ bool HitBox::CheckCollision(const HitBox& other) {
 					 (pos.y - size.y < otherPos.y + otherSize.y);
 	
 	if (collision) {
-		other.parentEntity->OnCollision(other);
+		(*collisionCallback)(*this, other);
 	}
 
 	return collision;

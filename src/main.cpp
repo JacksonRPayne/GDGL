@@ -27,10 +27,6 @@
 // 
 
 
-// NOTE:
-// -- I could make this project like: backbone = OOP, game on top = functional
-// -- Backbone is more like an API, but game on top feels like everything should be public/global/functional
-
 int main(void)
 {
 	Game game("Zach!");
