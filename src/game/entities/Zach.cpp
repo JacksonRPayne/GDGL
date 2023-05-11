@@ -15,6 +15,7 @@ void ZachOnCollision(const HitBox& thisHb, const HitBox& otherHb) {
 		glm::vec2 otherScale = 0.5f * otherHb.localTransform.GetScale();
 
 		// TODO: this is dumb
+		// ^ also seems to only work if an entity spawned after pushes an entity spawned before
 		float sign = 0.0f;
 		if (otherPos.x > pos.x) sign = -1.0f;
 		else sign = 1.0f;
