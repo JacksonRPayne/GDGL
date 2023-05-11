@@ -476,6 +476,9 @@
     <ClInclude Include="src\game\entities\Zach.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="README.md" />
     <None Include="res\shaders\batch_default.frag" />
     <None Include="res\shaders\batch_default.vert" />
     <None Include="res\shaders\default.frag" />
