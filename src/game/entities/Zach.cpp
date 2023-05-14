@@ -6,6 +6,9 @@ Texture* Zach::textureAtlas;
 Zach* Zach::grabbed = nullptr;
 
 void ZachOnCollision(const HitBox& thisHb, const HitBox& otherHb) {
+	// https://stackoverflow.com/questions/8515198/basic-aabb-collision-using-projection-vector
+	// http://www.metanetsoftware.com/technique/tutorialA.html
+	// --^ good references for collision resolution
 	if (otherHb.tag == HitBoxType::Player) {
 		// Get diff of vectors then negate then move that way
 		//glm::vec2 dist = other.parentEntity->transform.GetPosition() - transform.GetPosition();
@@ -35,7 +38,6 @@ Zach::Zach(float xPos, float yPos, float xScale, float yScale, float rotation, c
 #pragma region MOVE_CONSTRUCTORS
 
 Zach::Zach(Zach&& other) noexcept {
-	std::cout << "Zach move constructor" << '\n';
 	this->transform = other.transform;
 	this->animator = std::move(other.animator);
 	this->subTexture = other.subTexture;
@@ -48,7 +50,6 @@ Zach::Zach(Zach&& other) noexcept {
 }
 
 Zach& Zach::operator=(Zach&& other) noexcept {
-	std::cout << "Zach move assignment" << '\n';
 	if (this != &other) {
 		this->transform = other.transform;
 		this->animator = std::move(other.animator);
@@ -103,7 +104,6 @@ void Zach::UnloadAnimations() {
 
 void Zach::InitializeAnimations() {
 	if (!idle.GetFrames().size()) Zach::LoadAnimations();
-	// TODO: with move semantics, can I take this animation and move it all the way into the animator with no copies? 
 	animator.AddAnimation("Idle", &idle);
 	animator.AddAnimation("Walk", &walk);
 }
@@ -126,7 +126,7 @@ void Zach::RenderMultiple(Renderer* renderer, std::vector<Zach>* zachs) {
 
 void Zach::Update(float dt) {
 	// Drag and drop zachs with right click
-	if (InputManager::GetKey(GLFW_KEY_G)){
+	if (InputManager::GetMouseButton(GLFW_MOUSE_BUTTON_2)){
 		glm::vec2 mousePos = InputManager::GetWorldMousePos(Window::width, Window::height, SceneManager::GetCurrentScene()->mainCamera->right, SceneManager::GetCurrentScene()->mainCamera->transform);
 		if ((!grabbed || grabbed == this) && hitBox.Contains(mousePos)) {
 			transform.SetPosition(mousePos);

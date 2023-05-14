@@ -17,7 +17,7 @@ struct MainEntities {
 	void Render(Renderer* renderer) {
 		renderer->Start();
 
-		//zach.Render(renderer);
+		zach.Render(renderer);
 		baby.Render(renderer);
 		Zach::RenderMultiple(renderer, &spawnedZachs);
 
@@ -37,7 +37,7 @@ void MainScene::Load() {
 	ResourceManager::LoadTexture("res/textures/Zach.png", "zach");
 	ResourceManager::LoadTexture("res/textures/Baby.png", "baby");
 	entities.zach = std::move(Zach(0.0f, 0.5f, 1.0f, 1.0f, 0.0f));
-	entities.baby = Baby(1.0f, 0.5f, 0.5f, 0.5f, 0.0f);
+	entities.baby = Baby(1.0f, 0.5f, 1.0f, 1.0f, 0.0f);
 	entities.spawnedZachs.reserve(100);
 	loaded = true;
 }

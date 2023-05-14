@@ -16,26 +16,29 @@ int Game::Run() {
         return -1;
     }
 
+    // Must init window after GLAD init
     window->Init();
 
+    // Set up delta time calculation
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
     float currFrame = 0.0f;
 
-    float camSpeed = 4.0f;
+    // Set up camera and renderer
     Camera camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT);
     ResourceManager::LoadShader("res/shaders/batch_default.vert", "res/shaders/batch_default.frag", "default");
     BatchRenderer renderer(&camera, ResourceManager::GetShader("default"));
 
+    // Set up scenes
     MainScene main("main", &camera, &renderer);
     SceneManager::AddScene(&main);
     SceneManager::SetCurrentScene("main");
+
     // Game loop
     while (window->IsOpen())
     {
-        /* Render here */
+        // Clear screen
         glClear(GL_COLOR_BUFFER_BIT);
-
         glClearColor(0.45f, 0.1f, 0.55f, 1.0f);
 
         // Calculate delta time
@@ -43,11 +46,10 @@ int Game::Run() {
         deltaTime = currFrame - lastFrame;
         lastFrame = currFrame;
 
-
+        // Update current scene
         SceneManager::Update(deltaTime);
 
         Log::LogFPS(deltaTime, 100);
-
 
         // Swap front and back buffers 
         window->SwapBuffers();
@@ -57,11 +59,14 @@ int Game::Run() {
         glfwPollEvents();
     }
 
+    // Free memory and end
     glfwTerminate();
     delete window;
     ResourceManager::FreeAll();
     return 0;
 }
+
+#pragma region TEST_RUN
 
 int Game::TEST_RUN() {
     // Initialize glfw
@@ -165,3 +170,4 @@ int Game::TEST_RUN() {
     ResourceManager::FreeAll();
     return 0;
 }
+#pragma endregion

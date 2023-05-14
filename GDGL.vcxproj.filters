@@ -1442,6 +1442,9 @@
     <None Include="res\shaders\default.vert" />
     <None Include="res\shaders\batch_default.vert" />
     <None Include="res\shaders\batch_default.frag" />
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\GLFW\lib-vc2022\glfw3.lib" />
