@@ -154,6 +154,12 @@ void Shader::SetVec3(const char* uniform, const glm::vec3& value) const{
 	if(location >=0) glUniform3f(location, value.x, value.y, value.z);
 }
 
+void Shader::SetVec4(const char* uniform, const glm::vec4& value) const {
+	// Locates and sets uniform
+	int location = FindUniform(uniform);
+	if (location >= 0) glUniform4f(location, value.x, value.y, value.z, value.w);
+}
+
 void Shader::SetMat4(const char* uniform, const glm::mat4 &value) const{
 	// Locates and sets uniform
 	int location = FindUniform(uniform);

@@ -1445,6 +1445,8 @@
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="README.md" />
+    <None Include="res\shaders\line.vert" />
+    <None Include="res\shaders\line.frag" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\GLFW\lib-vc2022\glfw3.lib" />

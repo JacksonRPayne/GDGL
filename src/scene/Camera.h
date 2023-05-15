@@ -13,7 +13,7 @@ public:
 	// for now return identity
 	glm::mat4 GetViewMatrix() { return transform.GetViewMatrix(); }
 	// hard coded for now
-	glm::mat4 GetProjectionMatrix() { return glm::ortho(left, right, bottom, top, -1.0f, 1.0f); }
+	glm::mat4 GetProjectionMatrix() { return projectionMatrix; }
 	// Adjusts projection matrix when window is resized
 	void OnResize(int width, int height);
 	void AdjustProjection(float aspectRatio);
@@ -24,6 +24,7 @@ public:
 	float top;
 
 	Transform transform;
+	glm::mat4 projectionMatrix;
 
 };
 

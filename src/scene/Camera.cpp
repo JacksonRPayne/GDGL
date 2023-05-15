@@ -11,4 +11,5 @@ void Camera::OnResize(int width, int height) {
 void Camera::AdjustProjection(float aspectRatio) {
 	left = -aspectRatio * WORLD_SCALE;
 	right = aspectRatio * WORLD_SCALE;
+	projectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
 }

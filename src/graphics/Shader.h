@@ -23,6 +23,7 @@ public:
 
 	// Uniforms:
 	void SetVec3(const char* uniform, const glm::vec3 &value) const;
+	void SetVec4(const char* uniform, const glm::vec4& value) const;
 	void SetMat4(const char* uniform, const glm::mat4& value) const;
 	void SetInts(const char* uniform, int count, const int* value) const; // For array of ints
 

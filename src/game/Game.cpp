@@ -50,6 +50,9 @@ int Game::Run() {
         SceneManager::Update(deltaTime);
 
         Log::LogFPS(deltaTime, 100);
+        // TODO: ok i guess this works...... how tf do I not have to set view/projection uniforms
+        // This literally shouldn't work at all. 
+        renderer.DrawLine({ 0, 0 }, { 1, 1 }, 10.0f);
 
         // Swap front and back buffers 
         window->SwapBuffers();

@@ -186,6 +186,34 @@ void BatchRenderer::DrawQuad(Texture* texture, const SubTexture &subTexture, con
 	numIndices += 6;
 }
 
+void BatchRenderer::DrawLine(glm::vec2 startPos, glm::vec2 endPos, float width, glm::vec4 color) {
+	float lineVerts[] = { 
+		startPos.x, startPos.y, 
+		endPos.x, endPos.y 
+	};
+
+	unsigned int vao;
+	unsigned int vbo;
+
+	// Setup
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float), lineVerts, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	// Render
+	//lineShader->Use();
+	//lineShader->SetVec4("color", color);
+	
+	glLineWidth(width);
+	glDrawArrays(GL_LINES, 0, 2);
+}
+
 void BatchRenderer::End() {
 	Flush();
 	// Unbinds all textures

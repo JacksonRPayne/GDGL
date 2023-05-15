@@ -484,6 +484,8 @@
     <None Include="res\shaders\batch_default.vert" />
     <None Include="res\shaders\default.frag" />
     <None Include="res\shaders\default.vert" />
+    <None Include="res\shaders\line.frag" />
+    <None Include="res\shaders\line.vert" />
     <None Include="vendor\glm\detail\func_common.inl" />
     <None Include="vendor\glm\detail\func_common_simd.inl" />
     <None Include="vendor\glm\detail\func_exponential.inl" />
