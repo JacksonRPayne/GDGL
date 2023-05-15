@@ -11,9 +11,9 @@ class ResourceManager
 public:
 
 	// For loading shaders and textures and storing them in their maps
-	static void LoadShader(const char* vertPath, const char* fragPath, const std::string& name);
+	static Shader* LoadShader(const char* vertPath, const char* fragPath, const std::string& name);
 	// Alpha pre set to true as PNG will be most common
-	static void LoadTexture(const char* path, const std::string& name, bool alpha = true);
+	static Texture* LoadTexture(const char* path, const std::string& name, bool alpha = true);
 
 	// TODO: add checks to see if key exists
 	static Texture* GetTexture(const std::string& name);

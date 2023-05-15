@@ -5,21 +5,23 @@ std::unordered_map<std::string, Texture*> ResourceManager::textureMap;
 std::unordered_map<std::string, Shader*> ResourceManager::shaderMap;
 
 
-void ResourceManager::LoadTexture(const char* path, const std::string& name, bool alpha) {
+Texture* ResourceManager::LoadTexture(const char* path, const std::string& name, bool alpha) {
 	// Don't reload texture
-	if (textureMap.count(name)) return;
+	if (textureMap.count(name)) return nullptr;
 	
 	Texture* texture = new Texture(path, alpha);
 	textureMap[name] = texture;
+	return texture;
 }
 
 
-void ResourceManager::LoadShader(const char* vertPath, const char* fragPath, const std::string& name) {
+Shader* ResourceManager::LoadShader(const char* vertPath, const char* fragPath, const std::string& name) {
 	// Don't reload shader
-	if (shaderMap.count(name)) return;
+	if (shaderMap.count(name)) return nullptr;
 
 	Shader* shader = new Shader(vertPath, fragPath);
 	shaderMap[name] = shader;
+	return shader;
 }
 
 // TODO: add checks to see if key exists

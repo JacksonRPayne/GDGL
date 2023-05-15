@@ -1,5 +1,6 @@
 #pragma once
 #include "Renderer.h"
+#include "system/ResourceManager.h"
 #include <stdio.h>
 // 10,000 seems to be the performance sweet spot
 #define MAX_QUADS 10000

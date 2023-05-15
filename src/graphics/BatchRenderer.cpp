@@ -73,6 +73,8 @@ void BatchRenderer::Initialize() {
 		boundTextures[i] = nullptr;
 	}
 
+	lineShader = ResourceManager::LoadShader("res/shaders/line.vert", "res/shaders/line.frag", "line");
+
 }
 
 void BatchRenderer::Start() {
@@ -207,9 +209,11 @@ void BatchRenderer::DrawLine(glm::vec2 startPos, glm::vec2 endPos, float width, 
 	glEnableVertexAttribArray(0);
 
 	// Render
-	//lineShader->Use();
-	//lineShader->SetVec4("color", color);
-	
+	lineShader->Use();
+	lineShader->SetVec4("color", color);
+	lineShader->SetMat4("view", camera->GetViewMatrix());
+	lineShader->SetMat4("projection", camera->GetProjectionMatrix());
+
 	glLineWidth(width);
 	glDrawArrays(GL_LINES, 0, 2);
 }
