@@ -116,6 +116,7 @@ void Zach::SetTexture(Texture* texture) {
 
 void Zach::Render(Renderer* renderer) {
 	renderer->DrawQuad(Zach::textureAtlas, subTexture, transform.GetModelMatrix());
+	hitBox.Render(renderer);
 }
 
 void Zach::RenderMultiple(Renderer* renderer, std::vector<Zach>* zachs) {

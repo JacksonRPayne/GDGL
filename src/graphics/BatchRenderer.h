@@ -50,15 +50,18 @@ private:
 	// Renders buffer
 	void Flush();
 
-	// Quad prefix in case of later line rendering
 	unsigned int quadVAO;
 	unsigned int quadVBO;
 	unsigned int quadIBO;
+
 	// Stores the VBO buffer and a pointer to iterate through it
 	QuadVertex* quadVertices;
 	QuadVertex* quadBufferPointer;
 	// Stores default quad vertices to be translated
 	glm::vec4 quadVertexPositions[4];
+
+	unsigned int lineVAO;
+	unsigned int lineVBO;
 
 	unsigned int numIndices;
 	// Stores bound textures in this draw call

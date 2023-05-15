@@ -36,3 +36,10 @@ bool HitBox::Contains(glm::vec2 point) {
 glm::vec2 HitBox::GetGlobalPosition() const{ 
 	return parentEntity->transform.GetPosition() + localTransform.GetPosition(); 
 }
+
+void HitBox::Render(Renderer* renderer) {
+	renderer->DrawLine(TopLeft(), TopRight());
+	renderer->DrawLine(TopRight(), BottomRight());
+	renderer->DrawLine(BottomRight(), BottomLeft());
+	renderer->DrawLine(BottomLeft(), TopLeft());
+}

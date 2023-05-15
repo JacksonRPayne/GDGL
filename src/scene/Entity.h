@@ -2,9 +2,7 @@
 #include "graphics/Transform.h"
 #include "graphics/Texture.h"
 #include "graphics/SpriteRenderer.h"
-#include "physics/HitBox.h"
 
-struct HitBox;
 
 class Entity
 {

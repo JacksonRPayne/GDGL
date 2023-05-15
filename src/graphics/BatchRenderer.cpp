@@ -73,7 +73,17 @@ void BatchRenderer::Initialize() {
 		boundTextures[i] = nullptr;
 	}
 
+	// Setting up line rendering
 	lineShader = ResourceManager::LoadShader("res/shaders/line.vert", "res/shaders/line.frag", "line");
+	glGenVertexArrays(1, &lineVAO);
+	glBindVertexArray(lineVAO);
+
+	// Allocates vertex buffer
+	glGenBuffers(1, &lineVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float), nullptr, GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
 }
 
@@ -189,31 +199,22 @@ void BatchRenderer::DrawQuad(Texture* texture, const SubTexture &subTexture, con
 }
 
 void BatchRenderer::DrawLine(glm::vec2 startPos, glm::vec2 endPos, float width, glm::vec4 color) {
+	// Set up vertices
 	float lineVerts[] = { 
 		startPos.x, startPos.y, 
 		endPos.x, endPos.y 
 	};
-
-	unsigned int vao;
-	unsigned int vbo;
-
-	// Setup
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-	
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float), lineVerts, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// Render
+	// Activate shader
 	lineShader->Use();
 	lineShader->SetVec4("color", color);
 	lineShader->SetMat4("view", camera->GetViewMatrix());
 	lineShader->SetMat4("projection", camera->GetProjectionMatrix());
-
+	// Bind buffers
+	glBindVertexArray(lineVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
+	// Insert data into buffer
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 4, lineVerts);
+	// Set line width and draw
 	glLineWidth(width);
 	glDrawArrays(GL_LINES, 0, 2);
 }

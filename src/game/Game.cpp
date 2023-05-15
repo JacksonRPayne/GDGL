@@ -51,8 +51,6 @@ int Game::Run() {
 
         Log::LogFPS(deltaTime, 100);
 
-        renderer.DrawLine({ 0, 0 }, { 1, 1 }, 10.0f);
-
         // Swap front and back buffers 
         window->SwapBuffers();
         // Update current frame inputs
